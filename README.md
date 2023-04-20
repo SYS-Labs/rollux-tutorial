@@ -7,7 +7,6 @@
 ## Getting Started
 
 * [Getting started developing for Rollux](./getting-started)
-<!---* [Optimism + Alchemy](https://docs.alchemy.com/alchemy/introduction/getting-started) -->
 * [Writing your first contract on Rollux](./first-contract) - if you are just getting started with blockchain development
 
 
@@ -29,6 +28,6 @@
 
 ## Ecosystem
 
-- [Alchemy](./ecosystem/alchemy)
+- [Ankr](./ecosystem/ankr)
 - [AttestationStation (Reputation primitive on Rollux)](./ecosystem/attestation-station)
 - [Tenderly](./ecosystem/tenderly)

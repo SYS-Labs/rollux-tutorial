@@ -52,18 +52,16 @@ In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one]
 
 Follow these steps to add Rollux Tanenbaum support to an existing Hardhat project (or a newly created one). 
 
-
+d
 1. Define your mnemonic in `.env`:
 
    ```sh
-      # Put the mnemonic for an account on Rollux here
       MNEMONIC=test test test test test test test test test test just junk
 
-      # API KEY for Alchemy
-      # Alchemy does not support Rollux yet. For future use.
-      ALCHEMY_API_KEY=
+      # API KEY for Ankr.
+      ANKR_API_KEY=
 
-      # URL to access Rollux Tanenbaum (if not using Alchemy)
+      # URL to access Rollux Tanenbaum (if not using Ankr)
       ROLLUX_TANENBAUM_URL=https://rpc-tanenbaum.rollux.com
    ```
 
@@ -84,9 +82,11 @@ Follow these steps to add Rollux Tanenbaum support to an existing Hardhat projec
    1. Get the correct URL from the configuration:
 
       ```js
-      const rolluxTanenbaumUrl =
-         process.env.ALCHEMY_API_KEY ?
-            `https://notAvailableYet.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+         /*This will default to ROLLUX_TANENBAUM_URL if 
+         you do not specify ANKR_API_KEY in .env */
+         const rolluxTanenbaumUrl = 
+         process.env.ANKR_API_KEY ? 
+            `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
             process.env.ROLLUX_TANENBAUM_URL
       ```
 
@@ -156,14 +156,12 @@ Follow these steps to add Rollux Tanenbaum support to an existing Truffle projec
 1. Define your network configuration in `.env`:
 
    ```sh
-      # Put the mnemonic for an account on Rollux here
       MNEMONIC=test test test test test test test test test test just junk
 
-      # API KEY for Alchemy
-      # Alchemy does not support Rollux yet. For future use.
-      ALCHEMY_API_KEY=
+      # API KEY for Ankr.
+      ANKR_API_KEY=
 
-      # URL to access Rollux Tanenbaum (if not using Alchemy)
+      # URL to access Rollux Tanenbaum (if not using Ankr)
       ROLLUX_TANENBAUM_URL=https://rpc-tanenbaum.rollux.com
    ```
 
@@ -191,9 +189,11 @@ Follow these steps to add Rollux Tanenbaum support to an existing Truffle projec
    1. Get the correct URL:
 
       ```js
-      const rolluxTanenbaumUrl =
-         process.env.ALCHEMY_API_KEY ?
-            `https://notAvailableYet.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
+         /*This will default to ROLLUX_TANENBAUM_URL if 
+         you do not specify ANKR_API_KEY in .env */
+         const rolluxTanenbaumUrl = 
+         process.env.ANKR_API_KEY ? 
+            `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
             process.env.ROLLUX_TANENBAUM_URL
       ```
 

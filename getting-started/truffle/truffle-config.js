@@ -21,11 +21,11 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 require('dotenv').config()
 
-      
-const rolluxTanenbaumUrl =
-    process.env.ALCHEMY_API_KEY ?
-        `https://notAvailableYet.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
-        process.env.ROLLUX_TANENBAUM_URL
+//This will default to ROLLUX_TANENBAUM_URL if you do not specify ANKR_API_KEY in .env      
+const rolluxTanenbaumUrl = 
+  process.env.ANKR_API_KEY ? 
+    `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
+    process.env.ROLLUX_TANENBAUM_URL
 
 const words = process.env.MNEMONIC.match(/[a-zA-Z]+/g).length
 validLength = [12, 15, 18, 24]
