@@ -1,1 +1,3 @@
 @eth-optimism/=lib/node_modules/@eth-optimism/
+forge-std/=lib/forge-std/src/
+fs_permissions = [{ access = "read", path = "./"}]
