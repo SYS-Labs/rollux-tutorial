@@ -42,16 +42,14 @@ contract Greeter {
     // This is less resource intensive than writing to storage.
     address cdmAddr = address(0);    
 
-    // Mainnet
-    if (block.chainid == 1)
-      cdmAddr = 0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1;
-
-    // Goerli
-    if (block.chainid == 5)
-      cdmAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
+    // L1
+    // Syscoin Tanenbaum
+    if (block.chainid == 5700)
+      cdmAddr = 0x51ac8093D762BBD17C8d898634916dAc14e1BCC1;
 
     // L2 (same address on every network)
-    if (block.chainid == 10 || block.chainid == 420)
+    // Rollux Tanenbaum
+    if (block.chainid == 57000)
       cdmAddr = 0x4200000000000000000000000000000000000007;
 
     // If this isn't a cross domain message
