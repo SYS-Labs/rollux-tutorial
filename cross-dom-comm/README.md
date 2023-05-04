@@ -21,8 +21,8 @@ To show how this works we installed [a slightly modified version of HardHat's `G
 
 | Network | Greeter address  |
 | ------- | ---------------- |
-| Syscoin Tanenbaum (L1) | [0x23128e44e52Bf720328c9859E8a5dff388fCce4B](https://tanenbaum.io/address/0x23128e44e52Bf720328c9859E8a5dff388fCce4B) |
-| Rollux Tanenbaum (L2) | [0xa9c531F5Ed8ef699BDcDF49Bc41446a1bdDAD2F8](https://rollux.tanenbaum.io/address/0xa9c531F5Ed8ef699BDcDF49Bc41446a1bdDAD2F8) |
+| Syscoin Tanenbaum (L1) | [0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD) |
+| Rollux Tanenbaum (L2) | [0x2316EEbB361d13b0BB091B7C3533079c0f2a229A](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229A) |
 
 #### What if somebody else uses the same contracts at the same time?
 
@@ -30,7 +30,7 @@ If somebody else uses these contracts while you are going through the tutorial, 
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
 However, you can still verify your controller works in one of these ways:
 
-- Find the transaction on either [Syscoin Tanenbaum Blockscout](https://tanenbaum.io/address/0x23128e44e52Bf720328c9859E8a5dff388fCce4B/internal-transactions#address-tabs) or [Rollux Tanenbaum Blockscout](https://rollux.tanenbaum.io/address/0xa9c531F5Ed8ef699BDcDF49Bc41446a1bdDAD2F8/internal-transactions#address-tabs).
+- Find the transaction on either [Syscoin Tanenbaum Blockscout](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD/internal-transactions#address-tabs) or [Rollux Tanenbaum Blockscout](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229A/internal-transactions#address-tabs).
   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
 - Just try again.
 
@@ -55,7 +55,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn
    ```
 
-#### Ethereum message to Optimism (deposit)
+#### Syscoin message to Rollux (deposit)
 
 1. Connect the Hardhat console to Rollux Tanenbaum (L2):
 
@@ -78,11 +78,11 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn hardhat console --network syscoin_tanenbaum
    ```
 
-1. Deploy and call the `FromL1_ControlL2Greeter` contract.
+1. Connect and call the `FromL1_ControlL2Greeter` contract.
 
    ```js
    Controller = await ethers.getContractFactory("FromL1_ControlL2Greeter")
-   controller = await Controller.deploy()
+   controller = await Controller.attach("0xE3e834bf6c532dB1Fd7A695f6BDaB2cfEE393FD2")
    tx = await controller.setGreeting(`Hardhat hello from L1 ${Date()}`)
    rcpt = await tx.wait()
    ```
@@ -126,11 +126,11 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn hardhat console --network rollux_tanenbaum
    ```
 
-1. Deploy and call the `FromL2_ControlL1Greeter` contract.
+1. Connect and call the `FromL2_ControlL1Greeter` contract.
 
    ```js
    Controller = await ethers.getContractFactory("FromL2_ControlL1Greeter")
-   controller = await Controller.deploy()
+   controller = await Controller.attach("0x69474f2d2878f6BBF494f320f80217D9F6C7A53f")
    tx = await controller.setGreeting(`Hardhat hello from L2 ${Date()}`)
    rcpt = await tx.wait()
    ```
