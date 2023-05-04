@@ -28,13 +28,15 @@ if (!validLength.includes(words)) {
 module.exports = {
   solidity: "0.8.4",
   networks: {
-     "optimism-goerli": {
-        url: `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`,
-        accounts: { mnemonic: process.env.MNEMONIC }
+    rollux_tanenbaum: {
+      url: process.env.ROLLUX_TANENBAUM_URL,
+      chainId: 57000,
+      accounts: { mnemonic: process.env.MNEMONIC }
       },
-      "goerli": {
-        url: `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`,
-        accounts: { mnemonic: process.env.MNEMONIC }
+    syscoin_tanenbaum: {
+      url: process.env.SYSCOIN_TANENBAUM_URL,
+      chainId: 5700,
+      accounts: { mnemonic: process.env.MNEMONIC }
       }
   } 
 };

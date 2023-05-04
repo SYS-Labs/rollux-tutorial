@@ -1,4 +1,4 @@
-# Estimate the costs of an Optimistic (L2) transaction
+# Estimate the costs of an Optimistic Rollux (L2) transaction
 
 [![Discord](https://img.shields.io/discord/1087373765014454322)](https://discord.gg/rollux)
 [![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
@@ -30,11 +30,11 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
    - `MNEMONIC` is the mnemonic to an account that has enough ETH to pay for the transaction.
 
-   - `ALCHEMY_API_KEY` is the API key for an Optimism Goerli app on [Alchemy](https://www.alchemy.com/), our preferred provider.
+   - `ANKR_API_KEY` is the API key for a Rollux app on [Ankr](https://www.ankr.com/), our preferred provider.
 
-   - `OPTIMISM_GOERLI_URL` is the URL for Optimism Goerli, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
+   - `ROLLUX_TANENBAUM_URL` is the URL for Rollux Tanenbaum, if you use [a different node provider](https://community.rollux.com/docs/useful-tools/providers/).
 
-   - `OPTIMISM_MAINNET_URL` is the URL for Optimism Mainnet, if you use [a different node provider](https://community.optimism.io/docs/useful-tools/providers/).
+   - `ROLLUX_MAINNET_URL` is the URL for Rollux Mainnet, if you use [a different node provider](https://community.rollux.com/docs/useful-tools/providers/).
 
 
 1. Use Node to run the script
