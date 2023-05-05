@@ -1,29 +1,28 @@
-# Communication between contracts on Optimism and Ethereum
+# Communication between contracts on Rollux and Syscoin
 
-[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
+[![Discord](https://img.shields.io/discord/1087373765014454322)](https://discord.gg/rollux)
+[![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
 
 This tutorial teaches you how to do interlayer communication.
-You will learn how to run a contract on Ethereum that runs another contract on Optimism, and also how to run a contract on Optimism that calls a contract on Ethereum.
+You will learn how to run a contract on Syscoin NEVM that runs another contract on Rollux, and also how to run a contract on Rollux that calls a contract on Syscoin NEVM.
 
-[You can read more details about this process here](https://community.optimism.io/docs/developers/bridge/messaging/).
+[You can read more details about this process here](https://community.rollux.com/docs/developers/bridge/messaging/).
 
 This tutorial focuses on sending and receiving messages.
 If you want to trace transactions, [see the tracing tutorial](../sdk-trace-tx/).
 
 
-**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network.
-Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/cross-dom-comm).
+**Note:** This tutorial uses the Rollux Tanenbaum test network.
 
 ## Seeing it in action
 
-To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both L1 Goerli and Optimism Goerli.
+To show how this works we installed [a slightly modified version of HardHat's `Greeter.sol`](hardhat/contracts/Greeter.sol) on both Syscoin Tanenbaum and Rollux Tanenbaum.
 
 
 | Network | Greeter address  |
 | ------- | ---------------- |
-| Goerli (L1) | [0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84) |
-| Optimism Goerli (L2) | [0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9) |
+| Syscoin Tanenbaum (L1) | [0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD) |
+| Rollux Tanenbaum (L2) | [0x2316EEbB361d13b0BB091B7C3533079c0f2a229A](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229A) |
 
 #### What if somebody else uses the same contracts at the same time?
 
@@ -31,7 +30,7 @@ If somebody else uses these contracts while you are going through the tutorial, 
 In that case you'll see the wrong greeting when you call the `Greeter` contract.
 However, you can still verify your controller works in one of these ways:
 
-- Find the transaction on either [Goerli Etherscan](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#internaltx) or [Optimistic Goerli Etherscan](https://goerli-optimism.etherscan.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#internaltx).
+- Find the transaction on either [Syscoin Tanenbaum Blockscout](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD/internal-transactions#address-tabs) or [Rollux Tanenbaum Blockscout](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229A/internal-transactions#address-tabs).
   In either case, it will be an internal transaction because the contract called directly is the cross domain messenger.
 - Just try again.
 
@@ -44,18 +43,11 @@ This is how you can see communication between domains work in hardhat.
 
 This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/) installed on your system. 
 
-1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
-
-   - An application on Goerli
-   - An application on Optimistic Goerli
-
-   Keep a copy of the two keys.
-
 1. Copy `.env.example` to `.env` and edit it:
 
-   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
-   1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
+   1. Set `MNEMONIC` to point to an account that has SYS on the Tanenbaum test network and the Rollux Tanenbaum test network.
+   1. Set `SYSCOIN_TANENBAUM_URL` to the URL of your Syscoin NEVM RPC provider.
+   1. Set `ROLLUX_TANENBAUM_URL` to the URL of your Rollux RPC provider.
    
 1. Install the necessary packages.
 
@@ -63,19 +55,19 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    yarn
    ```
 
-#### Ethereum message to Optimism (deposit)
+#### Syscoin message to Rollux (deposit)
 
-1. Connect the Hardhat console to Optimism Goerli (L2):
+1. Connect the Hardhat console to Rollux Tanenbaum (L2):
 
    ```sh
-   yarn hardhat console --network optimism-goerli
+   yarn hardhat console --network rollux_tanenbaum
    ```  
 
 1. Connect to the greeter on L2:
   
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9")
+   greeter = await Greeter.attach("0x2316EEbB361d13b0BB091B7C3533079c0f2a229A")
    await greeter.greet()
    ```
 
@@ -83,14 +75,14 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 1. In a separatate terminal window connect the Hardhat console to Goerli (L1):
 
    ```sh
-   yarn hardhat console --network goerli
+   yarn hardhat console --network syscoin_tanenbaum
    ```
 
-1. Deploy and call the `FromL1_ControlL2Greeter` contract.
+1. Connect and call the `FromL1_ControlL2Greeter` contract.
 
    ```js
    Controller = await ethers.getContractFactory("FromL1_ControlL2Greeter")
-   controller = await Controller.deploy()
+   controller = await Controller.attach("0xE3e834bf6c532dB1Fd7A695f6BDaB2cfEE393FD2")
    tx = await controller.setGreeting(`Hardhat hello from L1 ${Date()}`)
    rcpt = await tx.wait()
    ```
@@ -108,37 +100,37 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    await greeter.greet()
    ```
 
-1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events).
+1. In the block explorer, [view the event log](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229A/logs#address-tabs).
    Notice that the `xorigin` value is the controller address.
    The `user` value is your user's address, but that one is provided as part of the message.
 
-#### Optimism message to Ethereum (withdrawal)
+#### Rollux message to Syscoin (withdrawal)
 
 ##### Send the message
 
 1. Get the current L1 greeting. There are two ways to do that:
 
-   - [Browse to the Greeter contract on Etherscan](https://goerli.etherscan.io/address/0x7fA4D972bB15B71358da2D937E4A830A9084cf2e#readContract) and click **greet** to see the greeting.
+   - [Browse to the Greeter contract on Syscoin Blockscout](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD/read-contract#address-tabs) to see the current greeting.
 
-   - Run these commands in the Hardhat console connected to L1 Goerli:
+   - Run these commands in the Hardhat console connected to Syscoin Tanenbaum (L1):
 
      ```js
      Greeter = await ethers.getContractFactory("Greeter")
-     greeter = await Greeter.attach("0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84")
+     greeter = await Greeter.attach("0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD")
      await greeter.greet()     
      ```
 
-1. Connect the Hardhat console to Optimistic Goerli (L2):
+1. Connect the Hardhat console to Rollux Tanenbaum (L2):
 
    ```sh
-   yarn hardhat console --network optimistic-goerli
+   yarn hardhat console --network rollux_tanenbaum
    ```
 
-1. Deploy and call the `FromL2_ControlL1Greeter` contract.
+1. Connect and call the `FromL2_ControlL1Greeter` contract.
 
    ```js
    Controller = await ethers.getContractFactory("FromL2_ControlL1Greeter")
-   controller = await Controller.deploy()
+   controller = await Controller.attach("0x69474f2d2878f6BBF494f320f80217D9F6C7A53f")
    tx = await controller.setGreeting(`Hardhat hello from L2 ${Date()}`)
    rcpt = await tx.wait()
    ```
@@ -158,12 +150,12 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 ##### Submit the Merkle proof
 
 Once the state root is published on L1, we can present the [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5) for the withdrawal.
-The fault challenge window starts after you do this, so it's best to do it as early as possible. [You can read more about this in the documentation](https://community.optimism.io/docs/developers/bedrock/how-is-bedrock-different/#two-phase-withdrawals).
+The fault challenge window starts after you do this, so it's best to do it as early as possible. [You can read more about this in the documentation](https://community.rollux.com/docs/developers/bedrock/how-is-bedrock-different/#two-phase-withdrawals).
 
-1. Connect the Hardhat console to Goerli (L1):
+1. Connect the Hardhat console to Syscoin Tanenbaum (L1):
 
    ```sh
-   yarn hardhat console --network goerli
+   yarn hardhat console --network syscoin_tanenbaum
    ```
 
 1. Get the SDK (it is already in `node_modules`).
@@ -176,10 +168,10 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
    ```js
    l1Signer = await ethers.getSigner()
-   l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
+   l2Url = `https://rpc-tanenbaum.rollux.com`
    crossChainMessenger = new sdk.CrossChainMessenger({ 
-      l1ChainId: 5,
-      l2ChainId: 420,
+      l1ChainId: 5700,
+      l2ChainId: 57000,
       l1SignerOrProvider: l1Signer, 
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url),
       bedrock: true

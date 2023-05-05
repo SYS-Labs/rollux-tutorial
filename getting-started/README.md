@@ -335,6 +335,13 @@ You deploy a new contract:
 
 #### Greeter interaction
 
+The foundry toolbox includes a set of CLI-based tools for interacting with a project:
+
+* Forge is a command-line tool that ships with Foundry. Forge tests, builds, and deploys your smart contracts.
+* Cast is Foundry's command-line tool for performing Ethereum RPC calls.
+* Anvil is a local testnet node similar to Ganache.
+* Chisel is an advanced Solidity REPL shipped with Foundry. It can be used to quickly test the behavior of Solidity snippets on a local or forked network.
+
 Foundry does not give us a JavaScript console, everything can be done from the shell command line.
 
 1. Set the RPC URL and the contract address.

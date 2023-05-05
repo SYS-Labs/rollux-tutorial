@@ -1,6 +1,6 @@
 #! /usr/local/bin/node
 
-// Estimate the costs of an Optimistic (L2) transaction
+// Estimate the costs of an Optimistic Rollux (L2) transaction
 
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")
@@ -12,11 +12,11 @@ const { boolean } = require("yargs")
 
 const argv = yargs
   .option('network', {
-    // All of those choices are Optimism:
-    // mainnet - Optimism Mainnet, the production network
-    // goerli - Optimism Goerli, the main test network
-    choices: ["mainnet", "goerli"],
-    description: 'Optimism network to use'
+    // All of those choices are Rollux:
+    // mainnet - Rollux Mainnet, the production network
+    // tanenbaum - Rollux Tanenbaum, the main test network
+    choices: ["mainnet", "tanenbaum"],
+    description: 'Rollux network to use'
   }).
   option('verify', {
     type: boolean,
