@@ -7,6 +7,8 @@ const fs = require('fs')
 const main = async () => {
 
 
+
+
     const l1Provider = new ethers.providers.JsonRpcProvider(process.env.L1_RPC);
     const l2Provider = new ethers.providers.JsonRpcProvider(process.env.L2_RPC);
     const walletL1 = new ethers.Wallet(process.env.PK, l1Provider);
@@ -19,6 +21,10 @@ const main = async () => {
         l2ChainId: process.env.L2_CHAIN_ID,
         bedrock: true
     })
+
+    console.log(await cdm.getMessageStateRoot('0xff1fde3f7300e43a0655db32e5c6f8fad6deef54a917c8edad77e1b32d0257cb'));
+
+    process.exit();
 
     const IL1Bridge = new ethers.utils.Interface(fs.readFileSync('./abi/L1ERC721Bridge.json').toString());
     const IL2Bridge = new ethers.utils.Interface(fs.readFileSync('./abi/L2ERC721Bridge.json').toString());
@@ -50,9 +56,8 @@ const main = async () => {
 
 
     // const gasE = await cdm.estimateL2MessageGasLimit({
-    //     target: process.env.L2_BRIDGE,
+    //     target: '0x4200000000000000000000000000000000000007',
     //     direction: opSDK.MessageDirection.L1_TO_L2,
-    //     sender: '0x8dd330dde8d9898d43b4dc840da27a07df91b3c9',
     //     message: IL2Bridge.encodeFunctionData("finalizeBridgeERC721", [
     //         process.env.L2_NFT_ADDR,
     //         process.env.L1_NFT_ADDR,
@@ -61,7 +66,7 @@ const main = async () => {
     //         process.env.TOKEN_ID,
     //         ethers.utils.hexlify(ethers.utils.toUtf8Bytes("rollux-bridge"))
     //     ])
-    // })
+    // }, { from: '0x6197d1EeF304EB5284A0F6720f79403b4E9Bf3A5' })
 
     // console.log(gasE.toString())
 
@@ -82,7 +87,7 @@ const main = async () => {
     console.log(`Bridge tx sent - ${txBridge.hash}`);
 
 
-    await txBridge.wait();
+    // await txBridge.wait();
 }
 
 main().then((result) => {
