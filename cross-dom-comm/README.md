@@ -72,7 +72,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
    ```
 
 
-1. In a separatate terminal window connect the Hardhat console to Goerli (L1):
+1. In a separatate terminal window connect the Hardhat console to Syscoin Tanenbaum (L1):
 
    ```sh
    yarn hardhat console --network syscoin_tanenbaum
@@ -110,7 +110,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
 1. Get the current L1 greeting. There are two ways to do that:
 
-   - [Browse to the Greeter contract on Syscoin Blockscout](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD/read-contract#address-tabs) to see the current greeting.
+   - [Browse to the Greeter contract on Syscoin Tanenbaum Blockscout](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD/read-contract#address-tabs) to see the current greeting.
 
    - Run these commands in the Hardhat console connected to Syscoin Tanenbaum (L1):
 
@@ -180,7 +180,7 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
-   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
    This usually happens every four minutes.
 
    ```js
@@ -205,8 +205,8 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
 ##### Receive the message
 
-Transactions from Optimism to Ethereum are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
-Once the fault challenge period is over (ten seconds on Goerli, seven days on the production network) it is necessary to claim the transaction on L1. 
+Transactions from Rollux to Syscoin are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
+Once the fault challenge period is over (ten seconds on Rollux Tanenbaum, seven days on the production network) it is necessary to claim the transaction on L1.
 This is a complex process that requires a [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5).
 You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimism/sdk).
 
@@ -254,12 +254,12 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    yarn
    ```
 
-1. Create environment variables for the URLs for the Goerli and Optimism Goerli applications:
+1. Create environment variables for the URLs for the Syscoin Tanenbaum and Rollux Tanenbaum applications:
 
    ```sh
    cd ..
-   export GOERLI_URL= ...
-   export OPTI_GOERLI_URL= ...
+   export SYSCOIN_TANENBAUM_URL= ...
+   export ROLLUX_TANENBAUM_URL= ...
    ```
 
 1. Create environment variables for the Greeter contracts' addresses
@@ -272,18 +272,18 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Put your account mnemonic in the file `mnem.delme`.
 
 
-#### Ethereum message to Optimism (deposit)
+#### Syscoin message to Rollux (deposit)
 
 1. See the current greeting.
 
    ```sh
-   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii
+   cast call --rpc-url $ROLLUX_TANENBAUM_URL $GREETER_L2 "greet()"  | cast --to-ascii
    ```
 
 1. Deploy the `FromL1_ControlL2Greeter` contract.
 
    ```sh
-   forge create FromL1_ControlL2Greeter --rpc-url $GOERLI_URL --mnemonic-path mnem.delme
+   forge create FromL1_ControlL2Greeter --rpc-url $SYSCOIN_TANENBAUM_URL --mnemonic-path mnem.delme
    ```
 
 1. Create an environment variable for the `Deployed to:` address:
@@ -295,7 +295,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Send a transaction to change the L2 greeting:
 
    ```sh
-   cast send --rpc-url $GOERLI_URL \
+   cast send --rpc-url $SYSCOIN_TANENBAUM_URL \
       --mnemonic-path mnem.delme \
       $FROM_L1_CONTROLLER "setGreeting(string)" '"Foundry hello from L1"'
    ```
@@ -303,27 +303,27 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. See the greeting has changed. Note that the change might take a few minutes to propagate.
 
    ```sh
-   cast call --rpc-url $OPTI_GOERLI_URL $GREETER_L2 "greet()"  | cast --to-ascii   
+   cast call --rpc-url $ROLLUX_TANENBAUM_URL $GREETER_L2 "greet()"  | cast --to-ascii
    ```
 
-1. In the block explorer, [view the event log](https://goerli-explorer.optimism.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events).
+1. In the block explorer, [view the event log](https://rollux.tanenbaum.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events).
    Notice that the `xorigin` value is the controller address.
    The `user` value is your user's address, but that one is provided as part of the message.
 
-#### Optimism message to Ethereum (withdrawal)
+#### Rollux message to Syscoin (withdrawal)
 
 ##### Send the message
 
 1. See the current greeting.
 
    ```sh
-   cast call --rpc-url $GOERLI_URL $GREETER_L1 "greet()"  | cast --to-ascii
+   cast call --rpc-url $SYSCOIN_TANENBAUM_URL $GREETER_L1 "greet()"  | cast --to-ascii
    ```
 
 1. Deploy the `FromL2_ControlL1Greeter` contract.
 
    ```sh
-   forge create FromL2_ControlL1Greeter --rpc-url $OPTI_GOERLI_URL --mnemonic-path mnem.delme
+   forge create FromL2_ControlL1Greeter --rpc-url $ROLLUX_TANENBAUM_URL --mnemonic-path mnem.delme
    ```
 
 1. Create an environment variable for the `Deployed to:` address:
@@ -335,7 +335,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Send a transaction to change the L1 greeting:
 
    ```sh
-   cast send --rpc-url $OPTI_GOERLI_URL \
+   cast send --rpc-url $ROLLUX_TANENBAUM_URL \
       --mnemonic-path mnem.delme $FROM_L2_CONTROLLER \
       "setGreeting(string)" '"Foundry hello from L2"'
    ```
@@ -366,11 +366,11 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Configure a `CrossChainMessenger` object:
 
    ```js
-   l1Provider = new ethers.providers.JsonRpcProvider(process.env.GOERLI_URL)
+   l1Provider = new ethers.providers.JsonRpcProvider(process.env.SYSCOIN_TANENBAUM_URL)
    mnemonic = fs.readFileSync("../mnem.delme").toString()
    wallet = ethers.Wallet.fromMnemonic(mnemonic.slice(0,-1))
    l1Signer = wallet.connect(l1Provider)
-   l2Provider = new ethers.providers.JsonRpcProvider(process.env.OPTI_GOERLI_URL)
+   l2Provider = new ethers.providers.JsonRpcProvider(process.env.ROLLUX_TANENBAUM_URL)
    crossChainMessenger = new sdk.CrossChainMessenger({ 
       l1ChainId: 5,
       l2ChainId: 420,
@@ -382,7 +382,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
-   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
    This usually happens every four minutes.
 
    ```js
@@ -413,7 +413,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    `crossChainMessenger.getMessageStatus(process.env.HASH)` can return several values at this stage:
 
    - `sdk.MessageStatus.READY_TO_PROVE` (3): The proof transaction hasn't been processed yet.
-     Go to [Goerli Etherscan](https://goerli.etherscan.io/) and search for the hash.
+     Go to [Syscoin Tanenbaum Blockscout](https://tanenbaum.io/) and search for the hash.
 
    - `sdk.MessageStatus.IN_CHALLENGE_PERIOD` (4): Still in the challenge period, wait a few seconds.
 
@@ -438,7 +438,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. See the greeting has changed.
 
    ```sh
-   cast call --rpc-url $GOERLI_URL $GREETER_L1 "greet()"  | cast --to-ascii
+   cast call --rpc-url $SYSCOIN_TANENBAUM_URL $GREETER_L1 "greet()"  | cast --to-ascii
    ```
 
 
@@ -456,7 +456,7 @@ import { ICrossDomainMessenger } from
     "@eth-optimism/contracts/libraries/bridge/ICrossDomainMessenger.sol";
 ```
 
-This line imports the interface to send messages, [`ICrossDomainMessenger.sol`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/libraries/bridge/ICrossDomainMessenger.sol).
+This line imports the interface to send messages, [`ICrossDomainMessenger.sol`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts/contracts/libraries/bridge/ICrossDomainMessenger.sol).
 
 
 ```solidity
@@ -464,15 +464,15 @@ contract FromL1_ControlL2Greeter {
     address crossDomainMessengerAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
 ```
 
-This is the address of [`Proxy_OVM_L1CrossDomainMessenger`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Goerli. 
-To call L2 from L1 on mainnet, you need to [use this address](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/deployments/mainnet/Proxy__OVM_L1CrossDomainMessenger.json#L2).
-To call L1 from L2, on either mainnet or Goerli, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
+This is the address of [`Proxy_OVM_L1CrossDomainMessenger`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Syscoin Tanenbaum.
+To call L2 from L1 on mainnet, you need to [use this address](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/deployments/mainnet/Proxy__OVM_L1CrossDomainMessenger.json#L2).
+To call L1 from L2, on either mainnet or Syscoin Tanenbaum, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
 
 ```solidity
     address greeterL2Addr = 0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9;
 ```    
 
-This is the address on which `Greeter` is installed on Optimistic Goerli.
+This is the address on which `Greeter` is installed on Rollux Tanenbaum.
 
 
 ```solidity
@@ -514,7 +514,7 @@ This call actually sends the message. It gets three parameters:
 1. The address on L2 of the contract being contacted
 1. The calldata to send that contract
 1. The gas limit.
-   As long as the gas limit is below the [`enqueueL2GasPrepaid`](https://etherscan.io/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2#readContract) value, there is no extra cost.
+   As long as the gas limit is below the [`enqueueL2GasPrepaid`](https://explorer.syscoin.org/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2#readContract) value, there is no extra cost.
    Note that this parameter is also required on messages from L2 to L1, but there it does not affect anything.
 
 ```solidity
@@ -525,7 +525,7 @@ This call actually sends the message. It gets three parameters:
 
 ## Getting the source address
 
-If you look at Etherscan, for either the [L1 Greeter](https://goerli.etherscan.io/address/0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84#events) or the [L2 Greeter](https://goerli-explorer.optimism.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events), you will see events with the source address on the other layer.
+If you look at Blockscout, for either the [L1 Greeter](https://tanenbaum.io/address/0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD#events) or the [L2 Greeter](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229A#events), you will see events with the source address on the other layer.
 The way this works is that the cross domain messenger that calls the target contract has a method, `xDomainMessageSender()`, that returns the source address. It is used by the `getXsource` function in `Greeter`.
 
 ```solidity
@@ -538,22 +538,22 @@ It might look like it would be more efficient to calculate the address of the cr
 Unless we are going to run this code thousands of times, it is more efficient to just have a few `if` statements.
 
 ```solidity
-    // Mainnet
-    if (block.chainid == 1)
+    // Syscoin Mainnet
+    if (block.chainid == 57)
       cdmAddr = 0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1;
 
-    // Goerli
-    if (block.chainid == 5)
+    // Syscoin Tanenbaum
+    if (block.chainid == 5700)
       cdmAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
 
     // L2 (same address on every network)
-    if (block.chainid == 10 || block.chainid == 420)
+    if (block.chainid == 57000)
       cdmAddr = 0x4200000000000000000000000000000000000007;
       
 ```
 
-There are two possibilities for the cross domain messenger's address on L1, because the address is not determined by Optimism.
-On L2 Optimism has full control of the genesis block, so we can put all of our contracts on convenient addresses.
+There are two possibilities for the cross domain messenger's address on L1, because the address is not determined by Rollux.
+On L2, Rollux has full control of the genesis block, so we can put all of our contracts on convenient addresses.
 
 ```solidity
     // If this isn't a cross domain message
@@ -575,5 +575,5 @@ If it is the cross domain messenger, call `xDomainMessageSender()` to get the or
 
 ## Conclusion
 
-You should now be able to control contracts on Optimism from Ethereum or the other way around.
-This is useful, for example, if you want to hold cheap DAO votes on Optimism to manage an Ethereum treasury (see [rollcall](https://github.com/withtally/rollcall)) or offload a complicated calculation, which must be done in a traceable manner, to Optimism where gas is cheap.
+You should now be able to control contracts on Rollux from Syscoin or the other way around.
+This is useful, for example, if you want to hold cheap DAO votes on Rollux to manage a Syscoin treasury (see [rollcall](https://github.com/withtally/rollcall)) or offload a complicated calculation, which must be done in a traceable manner, to Rollux where gas is cheap.
