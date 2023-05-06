@@ -163,18 +163,41 @@ The fault challenge window starts after you do this, so it's best to do it as ea
    ```js
    sdk = require("@eth-optimism/sdk")
    ```
+1. Get the Syscoin Networks library.
+
+   ```
+   syscoinNetworks = require('syscoin-networks')
+   ```
 
 1. Configure a `CrossChainMessenger` object:
 
    ```js
+   l1ChainId = 5700
+   l2ChainId = 57000
+   l1Network = syscoinNetworks.getNetworkByChainId(l1ChainId, syscoinNetworks.networks)
+   l2Network = syscoinNetworks.getNetworkByChainId(l2ChainId, syscoinNetworks.networks)
    l1Signer = await ethers.getSigner()
    l2Url = `https://rpc-tanenbaum.rollux.com`
-   crossChainMessenger = new sdk.CrossChainMessenger({ 
-      l1ChainId: 5700,
-      l2ChainId: 57000,
-      l1SignerOrProvider: l1Signer, 
+   crossChainMessenger = new sdk.CrossChainMessenger({
+      l1ChainId: l1ChainId,
+      l2ChainId: l2ChainId,
+      l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: new ethers.providers.JsonRpcProvider(l2Url),
-      bedrock: true
+      bedrock: true,
+      contracts: { l1: l1Network.contracts, l2: l2Network.contracts },
+      bridges: {
+         ETH: {
+            Adapter: sdk.ETHBridgeAdapter,
+            l1Bridge: l1Network.contracts.L1StandardBridge,
+            l2Bridge: l2Network.contracts.L2StandardBridge,
+         },
+         Standard: {
+            Adapter: sdk.StandardBridgeAdapter,
+            l1Bridge:
+               l1Network.contracts.L1StandardBridge,
+            l2Bridge: l2Network.contracts.L2StandardBridge,
+         }
+      }
    })
    ```
 
@@ -238,12 +261,14 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
-   greeter = await Greeter.attach("0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84")
+   greeter = await Greeter.attach("0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD")
    await greeter.greet()     
    ```
 
 
 ### Foundry
+
+[Foundry](https://book.getfoundry.sh/) is a comprehensive smart contract development toolchain. Before proceeding with the following steps, ensure that you have installed Foundry by following their [installation guide](https://book.getfoundry.sh/getting-started/installation).
 
 #### Setup
 
@@ -265,8 +290,8 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 1. Create environment variables for the Greeter contracts' addresses
 
    ```sh
-   export GREETER_L1=0x4d0fcc1Bedd933dA4121240C2955c3Ceb68AAE84
-   export GREETER_L2=0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9
+   export GREETER_L1=0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD
+   export GREETER_L2=0x2316EEbB361d13b0BB091B7C3533079c0f2a229A
    ```
 
 1. Put your account mnemonic in the file `mnem.delme`.
@@ -306,7 +331,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    cast call --rpc-url $ROLLUX_TANENBAUM_URL $GREETER_L2 "greet()"  | cast --to-ascii
    ```
 
-1. In the block explorer, [view the event log](https://rollux.tanenbaum.io/address/0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9#events).
+1. In the block explorer, [view the event log](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229A#events).
    Notice that the `xorigin` value is the controller address.
    The `user` value is your user's address, but that one is provided as part of the message.
 
@@ -363,20 +388,44 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    ethers = require("ethers")
    ```
 
+1. Get the Syscoin Networks library.
+
+   ```
+   syscoinNetworks = require('syscoin-networks')
+   ```
+
 1. Configure a `CrossChainMessenger` object:
 
    ```js
+   l1ChainId = 5700
+   l2ChainId = 57000
+   l1Network = syscoinNetworks.getNetworkByChainId(l1ChainId, syscoinNetworks.networks)
+   l2Network = syscoinNetworks.getNetworkByChainId(l2ChainId, syscoinNetworks.networks)
    l1Provider = new ethers.providers.JsonRpcProvider(process.env.SYSCOIN_TANENBAUM_URL)
    mnemonic = fs.readFileSync("../mnem.delme").toString()
    wallet = ethers.Wallet.fromMnemonic(mnemonic.slice(0,-1))
    l1Signer = wallet.connect(l1Provider)
    l2Provider = new ethers.providers.JsonRpcProvider(process.env.ROLLUX_TANENBAUM_URL)
    crossChainMessenger = new sdk.CrossChainMessenger({ 
-      l1ChainId: 5,
-      l2ChainId: 420,
+      l1ChainId: l1ChainId,
+      l2ChainId: l2ChainId,
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Provider,
-      bedrock: true
+      bedrock: true,
+      contracts: { l1: l1Network.contracts, l2: l2Network.contracts },
+      bridges: {
+         ETH: {
+            Adapter: sdk.ETHBridgeAdapter,
+            l1Bridge: l1Network.contracts.L1StandardBridge,
+            l2Bridge: l2Network.contracts.L2StandardBridge,
+         },
+         Standard: {
+            Adapter: sdk.StandardBridgeAdapter,
+            l1Bridge:
+               l1Network.contracts.L1StandardBridge,
+            l2Bridge: l2Network.contracts.L2StandardBridge,
+         }
+      }
    })
    ```
 
@@ -386,7 +435,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    This usually happens every four minutes.
 
    ```js
-   crossChainMessenger.getMessageStatus(process.env.HASH).then(status => console.log(status === sdk.MessageStatus.READY_FOR_PROVE))
+   await crossChainMessenger.getMessageStatus(process.env.HASH).then(status => console.log(status === sdk.MessageStatus.READY_TO_PROVE))
    ```
 
    `await crossChainMessenger.getMessageStatus(process.env.HASH)` can return two values at this stage:
@@ -469,7 +518,7 @@ To call L2 from L1 on mainnet, you need to [use this address](https://github.com
 To call L1 from L2, on either mainnet or Syscoin Tanenbaum, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
 
 ```solidity
-    address greeterL2Addr = 0xE8B462EEF7Cbd4C855Ea4B65De65a5c5Bab650A9;
+    address greeterL2Addr = 0x2316EEbB361d13b0BB091B7C3533079c0f2a229A;
 ```    
 
 This is the address on which `Greeter` is installed on Rollux Tanenbaum.
