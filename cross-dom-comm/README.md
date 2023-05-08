@@ -513,7 +513,7 @@ contract FromL1_ControlL2Greeter {
     address crossDomainMessengerAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
 ```
 
-This is the address of [`Proxy_OVM_L1CrossDomainMessenger`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Syscoin Tanenbaum.
+This is the address of [`Proxy__OVM_L1CrossDomainMessenger`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/deployments/goerli/Proxy__OVM_L1CrossDomainMessenger.json#L2) on Syscoin Tanenbaum.
 To call L2 from L1 on mainnet, you need to [use this address](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/deployments/mainnet/Proxy__OVM_L1CrossDomainMessenger.json#L2).
 To call L1 from L2, on either mainnet or Syscoin Tanenbaum, use the address of `L2CrossDomainMessenger`, 0x4200000000000000000000000000000000000007.
 

@@ -1,7 +1,6 @@
 #package management
 node_modules
 hardhat/node_modules
-hardhat/.yarnrc.yml
 
 #Hardhat files
 cache

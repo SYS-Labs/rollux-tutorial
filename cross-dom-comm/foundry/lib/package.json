@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@eth-optimism/sdk": "^1.10.0"
+    "@eth-optimism/sdk": "^1.10.0",
+    "syscoin-networks": "https://github.com/SYS-Labs/syscoin-networks"
   }
 }

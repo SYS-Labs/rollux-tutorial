@@ -2458,6 +2458,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bech32@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "bech32@npm:2.0.0"
+  checksum: fa15acb270b59aa496734a01f9155677b478987b773bf701f465858bf1606c6a970085babd43d71ce61895f1baa594cb41a2cd1394bd2c6698f03cc2d811300e
+  languageName: node
+  linkType: hard
+
 "bigint-crypto-utils@npm:^3.0.23":
   version: 3.1.8
   resolution: "bigint-crypto-utils@npm:3.1.8"
@@ -2488,6 +2495,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bip174@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "bip174@npm:2.1.0"
+  checksum: 951dae544ef555d66f65b299a69ddf295733eac90449e57d2219abcedfd2d96e762856ca6b5cef4cd925a4498341ea174e359e8a4c45d0bb6b445c13c8add786
+  languageName: node
+  linkType: hard
+
 "bip39@npm:2.5.0":
   version: 2.5.0
   resolution: "bip39@npm:2.5.0"
@@ -2498,6 +2512,22 @@ __metadata:
     safe-buffer: ^5.0.1
     unorm: ^1.3.3
   checksum: 26e83583c43a8430afea1c385328b447005c74ddaf997cd8d3e416057f4968360b08ebf7de32374d605295c3abdd7ddd448d8078a2aa3d951735f4499c23875b
+  languageName: node
+  linkType: hard
+
+"bitcoinjs-lib@npm:^6.0.1":
+  version: 6.1.0
+  resolution: "bitcoinjs-lib@npm:6.1.0"
+  dependencies:
+    bech32: ^2.0.0
+    bip174: ^2.1.0
+    bs58check: ^2.1.2
+    create-hash: ^1.1.0
+    ripemd160: ^2.0.2
+    typeforce: ^1.11.3
+    varuint-bitcoin: ^1.1.2
+    wif: ^2.0.1
+  checksum: 0b23d0d5bb7377ea4ac467c9f1f6c6517ed112cd1b1f5e66a1402c854a99eba5fe5df9415a3e0d1ada631b179770075dda63d3d77531d0abdbc2b1d44be0a890
   languageName: node
   linkType: hard
 
@@ -2713,7 +2743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bs58check@npm:^2.1.2":
+"bs58check@npm:<3.0.0, bs58check@npm:^2.1.2":
   version: 2.1.2
   resolution: "bs58check@npm:2.1.2"
   dependencies:
@@ -4534,7 +4564,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.0.1, ethers@npm:^5.0.2, ethers@npm:^5.5.2, ethers@npm:^5.5.4, ethers@npm:^5.7.0":
+"ethers@npm:^5.0.1, ethers@npm:^5.0.2, ethers@npm:^5.5.2, ethers@npm:^5.5.4, ethers@npm:^5.7.0, ethers@npm:legacy-v5":
   version: 5.7.2
   resolution: "ethers@npm:5.7.2"
   dependencies:
@@ -5403,6 +5433,7 @@ __metadata:
     ethereum-waffle: ^3.4.0
     ethers: ^5.5.4
     hardhat: ^2.8.4
+    syscoin-networks: "https://github.com/SYS-Labs/syscoin-networks"
   languageName: unknown
   linkType: soft
 
@@ -8892,7 +8923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ripemd160@npm:^2.0.0, ripemd160@npm:^2.0.1":
+"ripemd160@npm:^2.0.0, ripemd160@npm:^2.0.1, ripemd160@npm:^2.0.2":
   version: 2.0.2
   resolution: "ripemd160@npm:2.0.2"
   dependencies:
@@ -9717,6 +9748,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"syscoin-networks@https://github.com/SYS-Labs/syscoin-networks":
+  version: 1.0.0
+  resolution: "syscoin-networks@https://github.com/SYS-Labs/syscoin-networks.git#commit=854a7d631b279839ccafbda3d1909e90f0c9895a"
+  dependencies:
+    bitcoinjs-lib: ^6.0.1
+    ethers: legacy-v5
+  checksum: c5d3a9bdccf061a0db1c028d0e03d73f9836cdd626eb0d05a505665760abc053297f592fc69dbd7768c34276a3fc95976aafbd476df8d9efde464096dc334fa7
+  languageName: node
+  linkType: hard
+
 "tape@npm:^4.6.3":
   version: 4.16.1
   resolution: "tape@npm:4.16.1"
@@ -10090,6 +10131,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typeforce@npm:^1.11.3":
+  version: 1.18.0
+  resolution: "typeforce@npm:1.18.0"
+  checksum: e3b21e27e76cb05f32285bef7c30a29760e79c622cfe4aa3c179ce49d1c7895b7154c8deedb9fe4599b1fd0428d35860d43e0776da1c04861168f3ad7ed99c70
+  languageName: node
+  linkType: hard
+
 "typewise-core@npm:^1.2, typewise-core@npm:^1.2.0":
   version: 1.2.0
   resolution: "typewise-core@npm:1.2.0"
@@ -10357,6 +10405,15 @@ __metadata:
   version: 5.0.2
   resolution: "varint@npm:5.0.2"
   checksum: e1a66bf9a6cea96d1f13259170d4d41b845833acf3a9df990ea1e760d279bd70d5b1f4c002a50197efd2168a2fd43eb0b808444600fd4d23651e8d42fe90eb05
+  languageName: node
+  linkType: hard
+
+"varuint-bitcoin@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "varuint-bitcoin@npm:1.1.2"
+  dependencies:
+    safe-buffer: ^5.1.1
+  checksum: 1c900bf08f2408ae33a6094dc5d809bdb6673eaf6039062d88c230155873e51e29c760053611f93ccd024854d04ebd92ed95c744720e94a79ca4e1150fcce071
   languageName: node
   linkType: hard
 
@@ -10816,6 +10873,15 @@ __metadata:
   dependencies:
     string-width: ^1.0.2 || 2 || 3 || 4
   checksum: d5fc37cd561f9daee3c80e03b92ed3e84d80dde3365a8767263d03dacfc8fa06b065ffe1df00d8c2a09f731482fcacae745abfbb478d4af36d0a891fad4834d3
+  languageName: node
+  linkType: hard
+
+"wif@npm:^2.0.1":
+  version: 2.0.6
+  resolution: "wif@npm:2.0.6"
+  dependencies:
+    bs58check: <3.0.0
+  checksum: 8c3147ef98d56f394d66f0477f699fba7fc18dd0d1c2c5d0f8408be41acffed589fa82447d80eae5afc9a3cbd943bc3eebb337b9f114955adeaad02a244f4f9a
   languageName: node
   linkType: hard
 

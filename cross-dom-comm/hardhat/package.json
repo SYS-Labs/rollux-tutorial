@@ -11,6 +11,7 @@
   "dependencies": {
     "@eth-optimism/contracts": "^0.5.40",
     "@eth-optimism/sdk": "^1.10.0",
+    "syscoin-networks": "https://github.com/SYS-Labs/syscoin-networks",
     "dotenv": "^16.0.0"
   }
 }
