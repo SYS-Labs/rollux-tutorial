@@ -56,7 +56,7 @@ d
 1. Define your mnemonic in `.env`:
 
    ```sh
-      MNEMONIC=test test test test test test test test test test just junk
+      MNEMONIC=test test test test test test test test test test trash junk
 
       # API KEY for Ankr.
       ANKR_API_KEY=
@@ -156,7 +156,7 @@ Follow these steps to add Rollux Tanenbaum support to an existing Truffle projec
 1. Define your network configuration in `.env`:
 
    ```sh
-      MNEMONIC=test test test test test test test test test test just junk
+      MNEMONIC=test test test test test test test test test test trash junk
 
       # API KEY for Ankr.
       ANKR_API_KEY=
@@ -396,7 +396,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 
    ```sh
    # Put the mnemonic for an account on Rollux here
-   MNEMONIC=test test test test test test test test test test just junk
+   MNEMONIC=test test test test test test test test test test trash junk
    ```
 
 1. Install packages.

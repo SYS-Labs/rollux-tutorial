@@ -2,7 +2,7 @@
 require('@nomiclabs/hardhat-ethers')
 
 // No need for a real mnemonic when you send free transactions
-junkMnemonic = 'test test test test test test test test test test test junk'
+junkMnemonic = 'test test test test test test test test test test trash junk'
 
 
 module.exports = {
