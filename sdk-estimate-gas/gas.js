@@ -13,9 +13,9 @@ const { boolean } = require("yargs")
 const argv = yargs
   .option('network', {
     // All of those choices are Rollux:
-    // mainnet - Rollux Mainnet, the production network
-    // tanenbaum - Rollux Tanenbaum, the main test network
-    choices: ["mainnet", "tanenbaum"],
+    // rollux_mainnet - the production network
+    // rollux_tanenbaum - the main test network
+    choices: ["rollux_mainnet", "rollux_tanenbaum"],
     description: 'Rollux network to use'
   }).
   option('verify', {
@@ -35,12 +35,12 @@ if (!validLength.includes(words)) {
 
 const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
 
-// These are the addresses of the Greeter.sol contract on the various Optimism networks:
-// mainnet - Optimism Mainnet, the production network
-// goerli - Optimism Goerli, the main test network
+// These are the addresses of the Greeter.sol contract on the various Rollux networks:
+// rollux_mainnet - the production network
+// rollux_tanenbaum - the main test network
 const greeterAddrs = {
-  "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
-  "goerli": "0x106941459a8768f5a92b770e280555faf817576f",
+  "rollux_mainnet":  "",
+  "rollux_tanenbaum": "0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816",
 }
 
 
@@ -53,21 +53,21 @@ const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 const getSigner = async () => {
   let endpointUrl;
 
-  if (argv.network == 'goerli')
+  if (argv.network == 'rollux_tanenbaum')
+    endpointUrl = 
+      process.env.ANKR_API_KEY ? 
+        `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
+        process.env.ROLLUX_TANENBAUM_URL
+  if (argv.network == 'rollux_mainnet')
     endpointUrl = 
       process.env.ALCHEMY_API_KEY ? 
-        `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
-        process.env.OPTIMISM_GOERLI_URL
-  if (argv.network == 'mainnet')
-    endpointUrl = 
-      process.env.ALCHEMY_API_KEY ? 
-        `https://opt-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
-        process.env.OPTIMISM_MAINNET_URL
+        `https://rpc.ankr.com/rollux_mainnet/${process.env.ANKR_API_KEY}` :
+        process.env.ROLLUX_MAINNET_URL
 
     const l2RpcProvider = optimismSDK.asL2Provider(
       new ethers.providers.JsonRpcProvider(endpointUrl)
     )
-    const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC).
+    const wallet = ethers.Wallet.fromMneumonic(process.env.MNEMONIC).
       connect(l2RpcProvider)
 
     return wallet

@@ -36,7 +36,7 @@ module.exports = {
   networks: {
     "local-devnode": {
        url: "http://localhost:8545",
-       accounts: { mnemonic: "test test test test test test test test test test just junk" }
+       accounts: { mnemonic: "test test test test test test test test test test trash junk" }
     },
     "rollux-tanenbaum": {
        url: rolluxTanenbaumUrl,
