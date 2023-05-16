@@ -6,12 +6,12 @@
 
 For an L1/L2 token pair to work on the Standard Bridge, there has to be a layer of original mint (where the minting and burning of tokens is controlled by the business logic), and a bridged layer where the Standard Bridge controls minting and burning.
 The most common configuration is to have L1 as the layer of original mint, and L2 as the bridged layer, this allows for ERC-20 contracts that were written with no knowledge of Optimism to be bridged.
-The contract on the bridged layer has to implement either the legacy [`IL2StandardERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface (only if the bridged layer is L2) or the new [`IOptimismMintableERC20`](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol) interface. 
+The contract on the bridged layer has to implement either the legacy [`IL2StandardERC20`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface (only if the bridged layer is L2) or the new [`IOptimismMintableERC20`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol) interface.
 
 For this to be done securely, the *only* entity that is allowed to mint and burn tokens on the bridged layer has to be the Standard Bridge, to ensure that the tokens on the bridged layer are backed up by real tokens on the layer of original mint. 
 It is also necessary that the ERC-20 token contract on the layer of original mint *not* implement either of the interfaces, to make sure the bridge contracts don't get confused and think it is the bridged layer.
 
-**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network. Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/standard-bridge-custom-token).
+**Note:** This tutorial is for the Bedrock OPv2 release, which is currently running on the Rollux Tanenbaum test network, but not on the production network.
 
 ## Customizing the `L2StandardERC20` implementation
 
@@ -42,15 +42,15 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
 1. Edit `.env` to set the deployment parameters:
 
    - `MNEMONIC`, the mnemonic for an account that has enough ETH for the deployment.
-   - `L1_ALCHEMY_KEY`, the key for the alchemy application for a Goerli endpoint.   
-   - `L2_ALCHEMY_KEY`, the key for the alchemy application for an Optimism Goerli endpoint.
+   - `L1_ALCHEMY_KEY`, the key for the alchemy application for a Syscoin Tanenbaum endpoint.
+   - `L2_ALCHEMY_KEY`, the key for the alchemy application for an Rollux Tanenbaum endpoint.
    - `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
      The default value, [`0x32B3b2281717dA83463414af4E8CfB1970E56287`](https://goerli.etherscan.io/address/0x32B3b2281717dA83463414af4E8CfB1970E56287) is a test ERC-20 contract on Goerli that lets you call `faucet` to give yourself test tokens.
 
 1. Open the hardhat console.
 
    ```sh
-   yarn hardhat console --network optimism-goerli
+   yarn hardhat console --network rollux_tanenbaum
    ```
 
 1. Deploy the contract.
@@ -179,7 +179,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    await withdrawalTx2.wait()
    ```
 
-1. Wait the fault challenge period (a short period on Goerli, seven days on the production network) and then finish the withdrawal.
+1. Wait the fault challenge period (a short period on Syscoin Tanenbaum, seven days on the production network) and then finish the withdrawal.
 
    ```js
    await crossChainMessenger.waitForMessageStatus(withdrawalTx1.hash, optimismSDK.MessageStatus.READY_FOR_RELAY)

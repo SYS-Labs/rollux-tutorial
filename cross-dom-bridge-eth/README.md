@@ -3,10 +3,9 @@
 [![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
-This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ETH between Layer 1 (Ethereum) and Layer 2 (Optimism).
+This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer SYS between Layer 1 (Syscoin) and Layer 2 (Rollux).
 
-**Note:** This tutorial is for the Bedrock release, which is currently running on the Optimism Goerli test network, but not on the production network.
-Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism-tutorial/tree/01e4f94fa2671cfed0c6c82257345f77b3b858ef/cross-dom-bridge-eth).
+**Note:** This tutorial is for the Bedrock OPv2 release, which is currently running on the Rollux Tanenbaum test network, but not on the production network.
 
 ## Setup
 
@@ -18,7 +17,7 @@ Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism
 1. Clone this repository and enter it.
 
    ```sh
-   git clone https://github.com/ethereum-optimism/optimism-tutorial.git
+   git clone https://github.com/SYS-Labs/rollux-tutorial.git
    cd optimism-tutorial/cross-dom-bridge-eth
    ```
 
@@ -30,8 +29,8 @@ Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism
 
 1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
 
-   - An application on Goerli
-   - An application on Optimistic Goerli
+   - An application on Syscoin Tanenbaum
+   - An application on Rollux Tanenbaum
 
    Keep a copy of the two keys.
 
@@ -41,7 +40,7 @@ Here is the [pre-Bedrock tutorial](https://github.com/ethereum-optimism/optimism
    1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
    1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
 
-   [This faucet gives ETH on the Goerli network](https://faucet.paradigm.xyz/). [This faucet gives ETH on the Optimism Goerli network](https://optimismfaucet.xyz/).
+   [This faucet gives SYS on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives SYS on the Rollux Tanenbaum network](https://sysdomains.xyz/rollux-faucet).
 
 
 ## Run the sample code
@@ -52,7 +51,7 @@ On the production network the withdrawals take around a week each, because of th
 
 ### Expected output
 
-When running on Goerli, the output from the script should be similar to:
+When running on Syscoin Tanenbaum,the output from the script should be similar to:
 
 ```
 Deposit ETH
@@ -166,8 +165,8 @@ Get the signers we need, and our address.
 
 ```js
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: 5,    // Goerli value, 1 for mainnet
-      l2ChainId: 420,  // Goerli value, 10 for mainnet
+      l1ChainId: 5700,    // Syscoin Tanenbaum value, 57 for mainnet
+      l2ChainId: 57000,  // Rollux Tanenbaum value, UNDISCLOSED for mainnet
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer,
       bedrock: true
@@ -205,7 +204,7 @@ const reportBalances = async () => {
 
 ### `depositETH`
 
-This function shows how to deposit ETH from Ethereum to Optimism.
+This function shows how to deposit SYS from Syscoin to Rollux.
 
 ```js
 const depositETH = async () => {
@@ -258,7 +257,7 @@ We can just report the balances and see that the L2 balance rose by 1 gwei.
 
 ### `withdrawETH`
 
-This function shows how to withdraw ETH from Optimism to Ethereum.
+This function shows how to withdraw SYS from Rollux to Syscoin.
 
 ```js
 const withdrawETH = async () => { 
@@ -277,7 +276,7 @@ By sending 0.01 ETH it is guaranteed that the withdrawal will actually increase 
 
 ```js
   console.log(`Transaction hash (on L2): ${response.hash}`)
-  console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
+  console.log(`\tFor more information: https://rollux.tanenbaum.io/tx/${response.hash}`)
   await response.wait()
 ```
 
@@ -291,8 +290,8 @@ This is the initial withdrawal transaction on Optimism.
 ```
 
 The Merkle proof has to be submitted after the state root is written on L1.
-On Goerli we usually submit a new state root every four minutes.
-When the state root is updated, you see a new transaction [on the L2OutputOracle contract](https://goerli.etherscan.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+On Syscoin Tanenbaum we usually submit a new state root every four minutes.
+When the state root is updated, you see a new transaction [on the L2OutputOracle contract](https://tanenbaum.io/address/0x253807F6ECaC4DdD6E24b0a2F8d4042b0AC30dfd).
 
 ```js
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
@@ -309,7 +308,7 @@ Submit the Merkle proof, starting the challenge period.
 ```
 
 Wait the challenge period.
-On Goerli the challenge period is very short (a few seconds) to speed up debugging.
+On Syscoin Tanenbaum the challenge period is very short (a few seconds) to speed up debugging.
 On the production network it is seven days for security.
 
 ```js

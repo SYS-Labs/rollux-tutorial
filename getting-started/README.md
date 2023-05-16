@@ -4,14 +4,14 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
 
 This tutorial teaches you the basics of Rollux development.
-Rollux is based upon Optimism Bedrock and is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on Ethereum mainnet.
-Therefore, the differences between Rollux development and Ethereum development are minor.
+Rollux is based upon Optimism Bedrock and is [EVM equivalent](https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306), meaning we run a slightly modified version of the same `geth` you run on Syscoin mainnet.
+Therefore, the differences between Rollux development and Syscoin development are minor.
 But a few differences [do exist](https://community.optimism.io/docs/developers/build/differences/#).
 
 
 ## Rollux endpoint URL
 
-To access any Ethereum type network you need an endpoint. RPC and WSS endpoints for Rollux are visible on [Chainlist](https://chainlist.org/?search=rollux&testnets=true).
+To access any Syscoin type network you need an endpoint. RPC and WSS endpoints for Rollux are visible on [Chainlist](https://chainlist.org/?search=rollux&testnets=true).
 
 Another great option for a Rollux RPC endpoint is [Ankr](https://www.ankr.com/rpc/rollux).
 
@@ -30,7 +30,7 @@ The tests examples below all use the Rollux Tanenbaum testnet.
 We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Rollux Tanenbaum, at address [0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816](https://rollux.tanenbaum.io/address/0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816). 
 You can verify your development stack configuration by interacting with it. 
 
-As you can see in the different development stacks below, the way you deploy contracts and interact with them on Rollux is almost identical to the way you do it with L1 Ethereum.
+As you can see in the different development stacks below, the way you deploy contracts and interact with them on Rollux is almost identical to the way you do it with L1 Syscoin.
 The most visible difference is that you have to specify a different endpoint (of course). 
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
 
@@ -338,7 +338,7 @@ You deploy a new contract:
 The foundry toolbox includes a set of CLI-based tools for interacting with a project:
 
 * Forge is a command-line tool that ships with Foundry. Forge tests, builds, and deploys your smart contracts.
-* Cast is Foundry's command-line tool for performing Ethereum RPC calls.
+* Cast is Foundry's command-line tool for performing Syscoin RPC calls.
 * Anvil is a local testnet node similar to Ganache.
 * Chisel is an advanced Solidity REPL shipped with Foundry. It can be used to quickly test the behavior of Solidity snippets on a local or forked network.
 
@@ -406,10 +406,10 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
    pip3 install dotenv
    ```
 
-1. Add the `rollux-testnet` network.
+1. Add the `rollux-tanenbaum` network.
 
    ```sh
-   brownie networks add Rollux Tanenbaum id=rollux-testnet \
+   brownie networks add Rollux Tanenbaum id=rollux-tanenbaum \
    host=https://rpc-tanenbaum.rollux.com chainid=57000 \
    explorer=https://rollux.tanenbaum.io \
    multicall2=0x1F359C32b5D8c9678b076eAac411A4d2Eb11E697
@@ -418,7 +418,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 1. Start the console.
 
    ```sh
-   brownie console --network rollux-testnet
+   brownie console --network rollux-tanenbaum
    ```
 
    Note that the default color scheme assumes a dark background. 

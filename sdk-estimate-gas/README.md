@@ -47,7 +47,7 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
    - `--network`: The network to estimate gas on:
      - `mainnet`: The Optimism mainnet network
-     - `goerli`: The Optimism testnet on Goerli
+     - `tanenbaum`: The Rollux Tanenbaum testnet
 
    - `--verify`: Run the transaction to verify the estimate
 
@@ -121,8 +121,8 @@ const argv = yargs
   .option('network', {
     // All of those choices are Optimism:
     // mainnet - Optimism Mainnet, the production network
-    // goerli - Optimism Goerli, the main test network
-    choices: ["mainnet", "goerli"],
+    // tanenbaum - Rollux Tanenbaum, the main test network
+    choices: ["mainnet", "tanenbaum"],
     description: 'Optimistm network to use'
   }).
   option('verify', {
@@ -144,17 +144,17 @@ Read the [JSON file](./Greeter.json) to know how to use the `Greeter` contract.
 ```js
 // These are the addresses of the Greeter.sol contract on the various Optimism networks:
 // mainnet - Optimism Mainnet, the production network
-// goerli - Optimism Goerli, the main test network
+// tanenbaum - Rollux Tanenbaum, the main test network
 const greeterAddrs = {
   "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
-  "goerli": "0x106941459a8768f5a92b770e280555faf817576f"
+  "tanenbaum": "0x106941459a8768f5a92b770e280555faf817576f"
 }
 ```
 
 Addresses for the Greeter contracts:
 
 - [Mainnet](https://explorer.optimism.io/address/0xcf210488dad6da5fe54d260c45253afc3a9e708c#code)
-- [Goerli](https://goerli-explorer.optimism.io/address/0x106941459a8768f5a92b770e280555faf817576f#code)
+- [Goerli](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229#code)
 
 
 
@@ -181,7 +181,7 @@ Return a [Promise](https://www.w3schools.com/js/js_promise.asp) that gets resolv
 const getSigner = async () => {
   let endpointUrl;
 
-  if (argv.network == 'goerli')
+  if (argv.network == 'tanenbaum')
     endpointUrl = 
       process.env.ALCHEMY_API_KEY ? 
         `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :

@@ -11,7 +11,7 @@ If you are already familiar with Solidity [go here](../getting-started) for a tu
 
 ### Wallet
 
-Before you can use Ethereum you need [wallet software](https://cointelegraph.com/news/overview-of-software-wallets-the-easy-way-to-store-crypto).
+Before you can use Syscoin you need [wallet software](https://cointelegraph.com/news/overview-of-software-wallets-the-easy-way-to-store-crypto).
 In this tutorial we use [MetaMask](https://metamask.io/), a browser extension, as our wallet.
 You can also use MetaMask on a mobile device (iOS or Android), but for software development it is best to use a notebook or desktop computer.
 
@@ -150,7 +150,7 @@ This is a field variable. The type, **uint**, is a 256 bit unsigned integer.
 This is the standard type for [evm](https://ethereum.org/en/developers/docs/evm/) variables.
 
 Note that all the fields in a contract are effectively public. 
-Ethereum code is executed by multiple computers in multiple locations, and can be verified by anybody. 
+Syscoin code is executed by multiple computers in multiple locations, and can be verified by anybody.
 This would be impossible if some part of the contract state had been unreadable. 
 A field variable being `private` only means it cannot be ready by on-chain code.
 
