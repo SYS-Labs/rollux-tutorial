@@ -19,15 +19,68 @@ const main = async () => {
         l2SignerOrProvider: walletL2,
         l1ChainId: process.env.L1_CHAIN_ID,
         l2ChainId: process.env.L2_CHAIN_ID,
-        bedrock: true
+        bedrock: true,
+        contracts: {
+            l1: {
+                AddressManager: '0xd4706EF8CbFebfc32a4930636a70BEed20d019b6',
+                L1CrossDomainMessenger: '0x4f0f13677f69F990013EF2f8f8D4c67e4b9a2d5F',
+                L1StandardBridge: '0x5eb41630CfA4465ec5b3EFe86979C32288895d7B',
+                StateCommitmentChain: ethers.constants.AddressZero,
+                CanonicalTransactionChain: ethers.constants.AddressZero,
+                BondManager: ethers.constants.AddressZero,
+                OptimismPortal: '0xD46Bf6354725bFd4409cd6A952695bFEb213aCB9',
+                L2OutputOracle: '0xf8d7Db6eeE25fe9c2F659936efD173C965B45F19',
+                L1ERC721Bridge: '0xc37Cf0839267CeE1827C0d70F74720d10618ba54',
+            },
+            l2: {
+                L2ToL1MessagePasser: '0x4200000000000000000000000000000000000016',
+                DeployerWhitelist: '0x4200000000000000000000000000000000000002',
+                L2CrossDomainMessenger: '0x4200000000000000000000000000000000000007',
+                GasPriceOracle: '0x420000000000000000000000000000000000000F',
+                L2StandardBridge: '0x4200000000000000000000000000000000000010',
+                SequencerFeeVault: '0x4200000000000000000000000000000000000011',
+                OptimismMintableERC20Factory: '0x4200000000000000000000000000000000000012',
+                L1BlockNumber: '0x4200000000000000000000000000000000000013',
+                L1Block: '0x4200000000000000000000000000000000000015',
+                LegacyERC20ETH: '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000',
+                WETH9: '0x4200000000000000000000000000000000000006',
+                GovernanceToken: '0x4200000000000000000000000000000000000042',
+                LegacyMessagePasser: '0x4200000000000000000000000000000000000000',
+                L2ERC721Bridge: '0x4200000000000000000000000000000000000014',
+                OptimismMintableERC721Factory: '0x4200000000000000000000000000000000000017',
+                ProxyAdmin: '0x4200000000000000000000000000000000000018',
+                BaseFeeVault: '0x4200000000000000000000000000000000000019',
+                L1FeeVault: '0x420000000000000000000000000000000000001a',
+            },
+        }
     })
 
-    console.log(await cdm.getMessageStateRoot('0xff1fde3f7300e43a0655db32e5c6f8fad6deef54a917c8edad77e1b32d0257cb'));
+
+    console.log(
+        await cdm.getMessageStatus('0x4027767974c309331dd1352699b52c2bc8af8594174ccbcd8e625fb63086beec')
+    )
 
     process.exit();
 
+
     const IL1Bridge = new ethers.utils.Interface(fs.readFileSync('./abi/L1ERC721Bridge.json').toString());
     const IL2Bridge = new ethers.utils.Interface(fs.readFileSync('./abi/L2ERC721Bridge.json').toString());
+
+
+    // console.log(
+
+    //     IL2Bridge.encodeFunctionData("finalizeBridgeERC721", [
+    //         process.env.L2_NFT_ADDR,
+    //         process.env.L1_NFT_ADDR,
+    //         walletL1.address,
+    //         walletL1.address,
+    //         process.env.TOKEN_ID,
+    //         ethers.utils.hexlify(ethers.utils.toUtf8Bytes("rollux-bridge"))
+    //     ])
+    // );
+
+    // process.exit();
+
 
     const L1Bridge = new ethers.Contract(process.env.L1_BRIDGE, IL1Bridge);
     const L2Bridge = new ethers.Contract(process.env.L2_BRIDGE, IL2Bridge);
@@ -41,7 +94,7 @@ const main = async () => {
     }
 
 
-    //approve token for L1 bridge
+    // approve token for L1 bridge
 
     console.log("Starting token approve for bridge");
     console.debug({
@@ -78,10 +131,7 @@ const main = async () => {
         process.env.L2_NFT_ADDR,
         process.env.TOKEN_ID,
         1_200_000,
-        ethers.utils.hexlify(ethers.utils.toUtf8Bytes("rollux-bridge")),
-        {
-            gasLimit: 2_000_000
-        }
+        ethers.utils.hexlify(ethers.utils.toUtf8Bytes("rollux-bridge"))
     )
 
     console.log(`Bridge tx sent - ${txBridge.hash}`);
