@@ -203,7 +203,7 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
-   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0x253807F6ECaC4DdD6E24b0a2F8d4042b0AC30dfd).
    This usually happens every four minutes.
 
    ```js
@@ -431,7 +431,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
-   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0xE6Dfba0953616Bacab0c9A8ecb3a9BBa77FC15c0).
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0x253807F6ECaC4DdD6E24b0a2F8d4042b0AC30dfd).
    This usually happens every four minutes.
 
    ```js

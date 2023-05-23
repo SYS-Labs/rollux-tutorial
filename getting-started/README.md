@@ -108,7 +108,7 @@ d
    ```sh
    cd hardhat
    yarn
-   yarn hardhat console --network rollux-tanenbaum
+   yarn hardhat console --network rollux_tanenbaum
    ```
 
 1. Connect to the Greeter contract:   
@@ -215,7 +215,7 @@ Follow these steps to add Rollux Tanenbaum support to an existing Truffle projec
 
    ```sh
    truffle compile
-   truffle console --network rollux-tanenbaum
+   truffle console --network rollux_tanenbaum
    ```
 
 1. Connect to the Greeter contact.
@@ -418,7 +418,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 1. Start the console.
 
    ```sh
-   brownie console --network rollux-tanenbaum
+   brownie console --network rollux_tanenbaum
    ```
 
    Note that the default color scheme assumes a dark background. 

@@ -83,8 +83,8 @@ const setup = async() => {
   const [l1Signer, l2Signer] = await getSigners()
   ourAddr = l1Signer.address
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
-      l1ChainId: 5,    // Goerli value, 1 for mainnet
-      l2ChainId: 420,  // Goerli value, 10 for mainnet
+      l1ChainId: 5700,   // Syscoin Tanenbaum value, 57 for mainnet
+      l2ChainId: 57000,  // Rollux Tanenbaum value, UNDISCLOSED for mainnet
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer,
       bedrock: true
