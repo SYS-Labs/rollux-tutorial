@@ -64,7 +64,7 @@ If you do not need any special processing on L2, just the ability to deposit, tr
    deployRcpt = await deployTx.wait()
    ```
 
-## Transferring tokens 
+## Transferring tokens
 
 1. Get the token addresses.
 
@@ -85,7 +85,7 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 1. Get the L2 contract.
 
    ```js
-   l2Contract = new ethers.Contract(l2Addr, optimismMintableERC20Data.abi, await ethers.getSigner())   
+   l2Contract = new ethers.Contract(l2Addr, optimismMintableERC20Data.abi, await ethers.getSigner())
    ```
 
 ### Get setup for L1 (provider, wallet, tokens, etc)
@@ -155,9 +155,9 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    Note that `l1Wallet` and `l2Wallet` have the same address, so it doesn't matter which one we use.
 
    ```js
-   await l1Contract.balanceOf(l1Wallet.address) 
+   await l1Contract.balanceOf(l1Wallet.address)
    await l2Contract.balanceOf(l1Wallet.address)
-   ```   
+   ```
 
 1. Do the actual deposit
 
@@ -175,7 +175,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 1. Check your balances on L1 and L2.
 
    ```js
-   await l1Contract.balanceOf(l1Wallet.address) 
+   await l1Contract.balanceOf(l1Wallet.address)
    await l2Contract.balanceOf(l1Wallet.address)
    ```
 
@@ -202,7 +202,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    ```js
    await crossChainMessenger.waitForMessageStatus(withdrawalTx1.hash, optimismSDK.MessageStatus.READY_FOR_RELAY)
    withdrawalTx3 = await crossChainMessenger.finalizeMessage(withdrawalTx1.hash)
-   await withdrawalTx3.wait()   
+   await withdrawalTx3.wait()
    ```
 
 
@@ -210,6 +210,6 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    The balance on L2 should be back to zero.
 
    ```js
-   await l1Contract.balanceOf(l1Wallet.address) 
+   await l1Contract.balanceOf(l1Wallet.address)
    await l2Contract.balanceOf(l1Wallet.address)
    ```

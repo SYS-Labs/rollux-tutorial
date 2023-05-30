@@ -4,7 +4,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
 
 This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ERC-20 tokens between Layer 1 (Syscoin) and Layer 2 (Rollux).
-While you *could* use [the bridge contracts](https://community.optimism.io/docs/developers/bridge/standard-bridge/) directly, a [simple usage error](https://community.optimism.io/docs/developers/bridge/standard-bridge/#depositing-erc20s) can cause you to lock tokens in the bridge forever and lose their value. 
+While you *could* use [the bridge contracts](https://community.optimism.io/docs/developers/bridge/standard-bridge/) directly, a [simple usage error](https://community.optimism.io/docs/developers/bridge/standard-bridge/#depositing-erc20s) can cause you to lock tokens in the bridge forever and lose their value.
 The SDK provides transparent safety rails to prevent that mistake.
 
 
@@ -44,7 +44,7 @@ The SDK provides transparent safety rails to prevent that mistake.
    1. Set `L1_ANKR_API_KEY` to the authentication key for the RPC provider for Syscoin Tanenbaum.
    1. Set `L2_ANKR_API_KEY` to the authentication key for the RPC provider for Rollux Tanenbaum.
 
-   [This faucet gives SYS on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives SYS on the Rollux Tanenbaum network](https://sysdomains.xyz/rollux-faucet).
+   [This faucet gives SYS on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives SYS on the Rollux Tanenbaum network](https://rollux.id/faucetapp).
 
 
 ## Run the sample code
@@ -143,11 +143,11 @@ The configuration parameters required for transfers.
 
 ### `getSigners`
 
-This function returns the two signers (one for each layer). 
+This function returns the two signers (one for each layer).
 
 ```js
 const getSigners = async () => {
-    const l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)    
+    const l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)
     const l2RpcProvider = new ethers.providers.JsonRpcProvider(l2Url)
 ```
 
@@ -156,12 +156,12 @@ The first step is to create the two providers, each connected to an endpoint in 
 ```js
     const hdNode = ethers.utils.HDNode.fromMnemonic(mnemonic)
     const privateKey = hdNode.derivePath(ethers.utils.defaultPath).privateKey
-```    
+```
 
 To derive the private key and address from a mnemonic it is not enough to create the `HDNode` ([Hierarchical Deterministic Node](https://en.bitcoin.it/wiki/Deterministic_wallet#Type_2:_Hierarchical_deterministic_wallet)).
 The same mnemonic can be used for different blockchains (it's originally a Bitcoin standard), and the node with Syscoin information is under [`ethers.utils.defaultPath`](https://docs.ethers.io/v5/single-page/#/v5/api/utils/hdnode/-%23-hdnodes--defaultpath).
 
-```js    
+```js
     const l1Wallet = new ethers.Wallet(privateKey, l1RpcProvider)
     const l2Wallet = new ethers.Wallet(privateKey, l2RpcProvider)
 
@@ -189,7 +189,7 @@ const erc20ABI = [
   },
 ```
 
-This is `balanceOf` from the ERC-20 standard, used to get the balance of an address. 
+This is `balanceOf` from the ERC-20 standard, used to get the balance of an address.
 
 ```js
   // faucet
@@ -199,7 +199,7 @@ This is `balanceOf` from the ERC-20 standard, used to get the balance of an addr
     outputs: [],
     stateMutability: "nonpayable",
     type: "function"
-  }  
+  }
 ]    // erc20ABI
 ```
 
@@ -297,7 +297,7 @@ const depositERC20 = async () => {
 
 To show that the deposit actually happened we show before and after balances.
 
-```js  
+```js
   const start = new Date()
 
   // Need the l2 address to know which bridge is responsible
@@ -308,7 +308,7 @@ To show that the deposit actually happened we show before and after balances.
 To enable the bridge to transfer ERC-20 tokens, it needs to get an allowance first.
 The reason to use the SDK here is that it looks up the bridge address for us.
 While most ERC-20 tokens go through the standard bridge, a few require custom business logic that has to be written into the bridge itself.
-In those cases there is a custom bridge contract that needs to get the allowance. 
+In those cases there is a custom bridge contract that needs to get the allowance.
 
 ```js
   await allowanceResponse.wait()
@@ -341,8 +341,8 @@ Of course, it takes time for the transaction to actually be processed on L1.
                                                   optimismSDK.MessageStatus.RELAYED)
 ```
 
-After the transaction is processed on L1 it needs to be picked up by an off-chain service and relayed to L2. 
-To show that the deposit actually happened we need to wait until the message is relayed. 
+After the transaction is processed on L1 it needs to be picked up by an off-chain service and relayed to L2.
+To show that the deposit actually happened we need to wait until the message is relayed.
 The [`waitForMessageStatus`](https://sdk.optimism.io/classes/crosschainmessenger#waitForMessageStatus) function does this for us.
 [Here are the statuses we can specify](https://sdk.optimism.io/enums/messagestatus).
 
@@ -367,7 +367,7 @@ The withdrawal process has these stages:
 1. Submit the withdrawal transaction on Optimism.
 1. Wait until the state root with the withdrawal is published (and the status changes to `optimismSDK.MessageStatus.READY_TO_PROVE`).
 1. Submit the proof on L1 using `crossChainMessenger.proveMessage()`.
-1. Wait the fault challenge period. 
+1. Wait the fault challenge period.
    When this period is over, the status becomes `optimismSDK.MessageStatus.READY_FOR_RELAY`
 1. Finalize to cause the actual withdrawal on L1 using `crossChainMessenger.proveMessage()`.
 
@@ -396,7 +396,7 @@ This is the initial withdrawal transaction on Optimism.
 ```js
   console.log("Waiting for status to be READY_TO_PROVE")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
+  await crossChainMessenger.waitForMessageStatus(response.hash,
     optimismSDK.MessageStatus.READY_TO_PROVE)
 ```
 
@@ -405,16 +405,16 @@ On Syscoin Tanenbaum we usually submit a new state root every four minutes.
 When the state root is updated, you see a new transaction [on the L2OutputOracle contract](https://tanenbaum.io/address/0x253807F6ECaC4DdD6E24b0a2F8d4042b0AC30dfd).
 
 ```js
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.proveMessage(response.hash)
 ```
 
 Submit the Merkle proof, starting the challenge period.
 
 ```js
-  console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
+  console.log("In the challenge period, waiting for status READY_FOR_RELAY")
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
+  await crossChainMessenger.waitForMessageStatus(response.hash,
                                                 optimismSDK.MessageStatus.READY_FOR_RELAY)
 ```
 
@@ -424,7 +424,7 @@ On the production network it is seven days for security.
 
 ```js
   console.log("Ready for relay, finalizing message now")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.finalizeMessage(response.hash)
 ```
 
@@ -432,11 +432,11 @@ Finalize the withdrawal and actually get back the token.
 
 ```js
   console.log("Waiting for status to change to RELAYED")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response, 
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
+  await crossChainMessenger.waitForMessageStatus(response,
     optimismSDK.MessageStatus.RELAYED)
-  await reportERC20Balances()   
-  console.log(`withdrawERC20 took ${(new Date()-start)/1000} seconds\n\n\n`)  
+  await reportERC20Balances()
+  console.log(`withdrawERC20 took ${(new Date()-start)/1000} seconds\n\n\n`)
 }     // withdrawERC20()
 ```
 
@@ -463,7 +463,7 @@ main().then(() => process.exit(0))
 
 ## Conclusion
 
-You should now be able to write applications that use our SDK and bridge to transfer ERC-20 assets between layer 1 and layer 2. 
+You should now be able to write applications that use our SDK and bridge to transfer ERC-20 assets between layer 1 and layer 2.
 
 Note that for withdrawals of a commonly used ERC-20 token (or ETH) you would probably want to use a [third party bridge](https://www.optimism.io/apps/bridges) for higher speed and lower cost.
 Here is the API documentation for some of those bridges:

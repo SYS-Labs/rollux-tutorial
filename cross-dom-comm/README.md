@@ -41,14 +41,14 @@ This is how you can see communication between domains work in hardhat.
 
 #### Setup
 
-This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/) installed on your system. 
+This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/) installed on your system.
 
 1. Copy `.env.example` to `.env` and edit it:
 
    1. Set `MNEMONIC` to point to an account that has SYS on the Tanenbaum test network and the Rollux Tanenbaum test network.
    1. Set `SYSCOIN_TANENBAUM_URL` to the URL of your Syscoin NEVM RPC provider.
    1. Set `ROLLUX_TANENBAUM_URL` to the URL of your Rollux RPC provider.
-   
+
 1. Install the necessary packages.
 
    ```sh
@@ -61,10 +61,10 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
    ```sh
    yarn hardhat console --network rollux_tanenbaum
-   ```  
+   ```
 
 1. Connect to the greeter on L2:
-  
+
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
    greeter = await Greeter.attach("0x2316EEbB361d13b0BB091B7C3533079c0f2a229A")
@@ -117,7 +117,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
      ```js
      Greeter = await ethers.getContractFactory("Greeter")
      greeter = await Greeter.attach("0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD")
-     await greeter.greet()     
+     await greeter.greet()
      ```
 
 1. Connect the Hardhat console to Rollux Tanenbaum (L2):
@@ -262,7 +262,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
    greeter = await Greeter.attach("0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD")
-   await greeter.greet()     
+   await greeter.greet()
    ```
 
 
@@ -315,7 +315,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```sh
    export FROM_L1_CONTROLLER= << address >>
-   ```   
+   ```
 
 1. Send a transaction to change the L2 greeting:
 
@@ -355,7 +355,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
    ```sh
    export FROM_L2_CONTROLLER= << address >>
-   ```   
+   ```
 
 1. Send a transaction to change the L1 greeting:
 
@@ -375,7 +375,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 
 1. Run `node`, the JavaScript command line.
- 
+
    ```sh
    cd lib
    node
@@ -406,7 +406,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
    wallet = ethers.Wallet.fromMnemonic(mnemonic.slice(0,-1))
    l1Signer = wallet.connect(l1Provider)
    l2Provider = new ethers.providers.JsonRpcProvider(process.env.ROLLUX_TANENBAUM_URL)
-   crossChainMessenger = new sdk.CrossChainMessenger({ 
+   crossChainMessenger = new sdk.CrossChainMessenger({
       l1ChainId: l1ChainId,
       l2ChainId: l2ChainId,
       l1SignerOrProvider: l1Signer,
@@ -501,7 +501,7 @@ Except for addresses, the contract going the other direction, [`FromL2_ControlL1
 // This contracts runs on L1, and controls a Greeter on L2.
 pragma solidity ^0.8.0;
 
-import { ICrossDomainMessenger } from 
+import { ICrossDomainMessenger } from
     "@eth-optimism/contracts/libraries/bridge/ICrossDomainMessenger.sol";
 ```
 
@@ -519,7 +519,7 @@ To call L1 from L2, on either mainnet or Syscoin Tanenbaum, use the address of `
 
 ```solidity
     address greeterL2Addr = 0x2316EEbB361d13b0BB091B7C3533079c0f2a229A;
-```    
+```
 
 This is the address on which `Greeter` is installed on Rollux Tanenbaum.
 
@@ -528,7 +528,7 @@ This is the address on which `Greeter` is installed on Rollux Tanenbaum.
     function setGreeting(string calldata _greeting) public {
 ```
 
-This function sets the new greeting. Note that the string is stored in `calldata`. 
+This function sets the new greeting. Note that the string is stored in `calldata`.
 This saves us some gas, because when we are called from an externally owned account or a different contract there no need to copy the input string to memory.
 The downside is that we cannot call `setGreeting` from within this contract, because contracts cannot modify their own calldata.
 
@@ -538,8 +538,8 @@ The downside is that we cannot call `setGreeting` from within this contract, bec
 
 This is where we'll store the message to send to L2.
 
-```solidity 
-        message = abi.encodeWithSignature("setGreeting(string,address)", 
+```solidity
+        message = abi.encodeWithSignature("setGreeting(string,address)",
             _greeting, msg.sender);
 ```
 
@@ -567,7 +567,7 @@ This call actually sends the message. It gets three parameters:
    Note that this parameter is also required on messages from L2 to L1, but there it does not affect anything.
 
 ```solidity
-    }      // function setGreeting 
+    }      // function setGreeting
 }          // contract FromL1_ControlL2Greeter
 ```
 
@@ -580,10 +580,10 @@ The way this works is that the cross domain messenger that calls the target cont
 ```solidity
   // Get the cross domain origin, if any
   function getXorig() private view returns (address) {
-    address cdmAddr = address(0);    
+    address cdmAddr = address(0);
 ```
 
-It might look like it would be more efficient to calculate the address of the cross domain messenger just once, but that would involve changing the state, which is an expensive operation. 
+It might look like it would be more efficient to calculate the address of the cross domain messenger just once, but that would involve changing the state, which is an expensive operation.
 Unless we are going to run this code thousands of times, it is more efficient to just have a few `if` statements.
 
 ```solidity
@@ -598,7 +598,7 @@ Unless we are going to run this code thousands of times, it is more efficient to
     // L2 (same address on every network)
     if (block.chainid == 57000)
       cdmAddr = 0x4200000000000000000000000000000000000007;
-      
+
 ```
 
 There are two possibilities for the cross domain messenger's address on L1, because the address is not determined by Rollux.

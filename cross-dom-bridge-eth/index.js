@@ -85,10 +85,10 @@ const depositETH = async () => {
 
 
 
-const withdrawETH = async () => { 
-  
+const withdrawETH = async () => {
+
   console.log("Withdraw ETH")
-  const start = new Date()  
+  const start = new Date()
   await reportBalances()
 
   const response = await crossChainMessenger.withdrawETH(centieth)
@@ -98,27 +98,27 @@ const withdrawETH = async () => {
 
   console.log("Waiting for status to be READY_TO_PROVE")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
+  await crossChainMessenger.waitForMessageStatus(response.hash,
     optimismSDK.MessageStatus.READY_TO_PROVE)
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.proveMessage(response.hash)
   
 
-  console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
+  console.log("In the challenge period, waiting for status READY_FOR_RELAY")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-                                                optimismSDK.MessageStatus.READY_FOR_RELAY) 
+  await crossChainMessenger.waitForMessageStatus(response.hash,
+                                                optimismSDK.MessageStatus.READY_FOR_RELAY)
   console.log("Ready for relay, finalizing message now")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.finalizeMessage(response.hash)
 
   console.log("Waiting for status to change to RELAYED")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response, 
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
+  await crossChainMessenger.waitForMessageStatus(response,
     optimismSDK.MessageStatus.RELAYED)
-  
-  await reportBalances()   
-  console.log(`withdrawETH took ${(new Date()-start)/1000} seconds\n\n\n`)  
+
+  await reportBalances()
+  console.log(`withdrawETH took ${(new Date()-start)/1000} seconds\n\n\n`)
 }     // withdrawETH()
 
 

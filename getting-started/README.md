@@ -31,7 +31,7 @@ We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/m
 You can verify your development stack configuration by interacting with it. 
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Rollux is almost identical to the way you do it with L1 Syscoin.
-The most visible difference is that you have to specify a different endpoint (of course). 
+The most visible difference is that you have to specify a different endpoint (of course).
 The list of other differences is [here](https://community.optimism.io/docs/developers/build/differences/).
 
 ## Development stacks
@@ -50,7 +50,7 @@ In [Hardhat](https://hardhat.org/) you use a configuration similar to [this one]
 
 #### Connecting to Rollux
 
-Follow these steps to add Rollux Tanenbaum support to an existing Hardhat project (or a newly created one). 
+Follow these steps to add Rollux Tanenbaum support to an existing Hardhat project (or a newly created one).
 
 d
 1. Define your mnemonic in `.env`:
@@ -82,10 +82,10 @@ d
    1. Get the correct URL from the configuration:
 
       ```js
-         /*This will default to ROLLUX_TANENBAUM_URL if 
+         /*This will default to ROLLUX_TANENBAUM_URL if
          you do not specify ANKR_API_KEY in .env */
-         const rolluxTanenbaumUrl = 
-         process.env.ANKR_API_KEY ? 
+         const rolluxTanenbaumUrl =
+         process.env.ANKR_API_KEY ?
             `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
             process.env.ROLLUX_TANENBAUM_URL
       ```
@@ -98,7 +98,7 @@ d
       url: rolluxTanenbaumUrl,
       chainId: 57000,
       accounts: { mnemonic: process.env.MNEMONIC }
-   }   
+   }
    ```
 
 
@@ -111,12 +111,12 @@ d
    yarn hardhat console --network rollux_tanenbaum
    ```
 
-1. Connect to the Greeter contract:   
+1. Connect to the Greeter contract:
 
    ```js
    Greeter = await ethers.getContractFactory("Greeter")
    greeter = await Greeter.attach("0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816")
-   ```   
+   ```
 
 
 1. Read information from the contract:
@@ -129,7 +129,7 @@ d
 
    ```js
    tx = await greeter.setGreeting(`Hardhat: Hello ${new Date()}`)
-   rcpt = await tx.wait()  
+   rcpt = await tx.wait()
    await greeter.greet()
    ```
 
@@ -150,7 +150,7 @@ In [Truffle](https://trufflesuite.com/) you use a configuration similar to [this
 
 #### Connecting to Rollux
 
-Follow these steps to add Rollux Tanenbaum support to an existing Truffle project. 
+Follow these steps to add Rollux Tanenbaum support to an existing Truffle project.
 
 
 1. Define your network configuration in `.env`:
@@ -189,10 +189,10 @@ Follow these steps to add Rollux Tanenbaum support to an existing Truffle projec
    1. Get the correct URL:
 
       ```js
-         /*This will default to ROLLUX_TANENBAUM_URL if 
+         /*This will default to ROLLUX_TANENBAUM_URL if
          you do not specify ANKR_API_KEY in .env */
-         const rolluxTanenbaumUrl = 
-         process.env.ANKR_API_KEY ? 
+         const rolluxTanenbaumUrl =
+         process.env.ANKR_API_KEY ?
             `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
             process.env.ROLLUX_TANENBAUM_URL
       ```
@@ -251,7 +251,7 @@ Follow these steps to add Rollux Tanenbaum support to an existing Truffle projec
 
 You deploy a new contract from the console.
 
-``` 
+```
 greeter = await Greeter.new("Greeter from Truffle")
 ```
 
@@ -272,7 +272,7 @@ await greeter.greet()
 
 In [Remix](https://remix.ethereum.org) you access Rollux through your own wallet.
 
-1. Add Rollux Tanenbaum to your wallet. 
+1. Add Rollux Tanenbaum to your wallet.
    The easiest way to do this is to use [chainlist.org](https://chainlist.org/?search=rollux&testnets=true).
 
 1. Log on with your wallet to Rollux Tanenbaum.
@@ -298,9 +298,9 @@ In [Remix](https://remix.ethereum.org) you access Rollux through your own wallet
 
 1. Click the run icon (<img src="assets/remix-run-icon.png" height="24" valign="top" />).
 
-1. Scroll down. 
+1. Scroll down.
    In the At Address field, type the contract address `0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816`.
-   Then, click **At Address**. 
+   Then, click **At Address**.
    Expand the contract to see you can interact with it.
 
    <img src="assets/remix-connect.png" width="300" />
@@ -309,7 +309,7 @@ In [Remix](https://remix.ethereum.org) you access Rollux through your own wallet
 
    ![](assets/remix-query.png)
 
-1. Type a greeting (preferably, one that starts with the word `Remix`) and then click **setGreeting**. Approve the transaction in your wallet. 
+1. Type a greeting (preferably, one that starts with the word `Remix`) and then click **setGreeting**. Approve the transaction in your wallet.
    Note that if the greeting includes a comma you need to enclose it in quotes.
 
 1. See the results on the console and then click **greet** again to see the greeting changed (see it under the **greet** button).
@@ -363,7 +363,7 @@ Foundry does not give us a JavaScript console, everything can be done from the s
    cast call $GREETER "greet()" | cast --to-ascii
    ```
 
-1. Put your mnemonic in a file `mnem.delme` and send a transaction. 
+1. Put your mnemonic in a file `mnem.delme` and send a transaction.
 
    ```sh
    cast send --mnemonic-path mnem.delme $GREETER "setGreeting(string)" "Foundry hello" --legacy
@@ -402,7 +402,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
 1. Install packages.
 
    ```sh
-   pip3 install eth-brownie 
+   pip3 install eth-brownie
    pip3 install dotenv
    ```
 
@@ -421,7 +421,7 @@ If you want to develop in Python, you can use the [Brownie](https://eth-brownie.
    brownie console --network rollux_tanenbaum
    ```
 
-   Note that the default color scheme assumes a dark background. 
+   Note that the default color scheme assumes a dark background.
    If your default background is light, you might want to create a file `brownie-config.yaml` with this content:
 
    ```yaml
@@ -528,11 +528,11 @@ Greeter.deploy("Hello", {'from': accounts[0]})
    ape console --network rollux:tanenbaum
    ```
 
-1. Connect to the Greeter contract:   
+1. Connect to the Greeter contract:
 
    ```python
    greeter = project.get_contract("Greeter").at("0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816")
-   ```   
+   ```
 
 1. Read information from the contract:
 
@@ -544,7 +544,7 @@ Greeter.deploy("Hello", {'from': accounts[0]})
 
    ```python
    acct = accounts.load("test")
-   greeter.setGreeting("Apeworx says hi ("+acct.address+")", sender=acct)  
+   greeter.setGreeting("Apeworx says hi ("+acct.address+")", sender=acct)
    ```
 
    Sign the transaction and provide the passphrase if necessary.
@@ -567,16 +567,16 @@ project.get_contract("Greeter").deploy("Hello", sender=acct)
 
 ## Best practices
 
-It is best to start development with the EVM provided by the development stack. 
+It is best to start development with the EVM provided by the development stack.
 Not only is it faster, but such EVMs often have extra features, such as the [ability to log messages from Solidity](https://hardhat.org/tutorial/debugging-with-hardhat-network.html) or a [graphical user interface](https://trufflesuite.com/ganache/).
 
-After you are done with that development, debug your decentralized application using either a development node or the Rollux Tanenbaum test network. 
+After you are done with that development, debug your decentralized application using either a development node or the Rollux Tanenbaum test network.
 This lets you debug parts that are Rollux specific such as calls to bridges to transfer assets between layers.
 
 Only when you have a version that works well on a test network should you deploy to the production network, where every transaction has a cost.
 
 ### Contract source verification
 
-You don't have to upload your source code to block explorers, but it is a good idea. 
+You don't have to upload your source code to block explorers, but it is a good idea.
 On the test network it lets you issue queries and transactions from the explorer's user interface.
 On the production network it lets users know exactly what your contract does, which is conducive to trust.

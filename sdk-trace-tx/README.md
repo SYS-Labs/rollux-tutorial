@@ -21,7 +21,7 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
    ```
 
 1. Copy `.env.example` to `.env` and specify the URLs for L1 and L2.
-   For the transactions in this tutorial we will use Goerli.
+   For the transactions in this tutorial we will use Rollux.
    However, you can use the same code to trace mainnet transactions.
 
 1. Start the hardhat console
@@ -37,10 +37,10 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
    l1Provider = new ethers.providers.JsonRpcProvider(process.env.L1URL)
    l2Provider = new ethers.providers.JsonRpcProvider(process.env.L2URL)
    l1ChainId = (await l1Provider._networkPromise).chainId
-   l2ChainId = (await l2Provider._networkPromise).chainId  
+   l2ChainId = (await l2Provider._networkPromise).chainId
    crossChainMessenger = new optimismSDK.CrossChainMessenger({
-     l1ChainId: l1ChainId,    
-     l2ChainId: l2ChainId,          
+     l1ChainId: l1ChainId,
+     l2ChainId: l2ChainId,
      l1SignerOrProvider: l1Provider,
      l2SignerOrProvider: l2Provider,
      bedrock: true
@@ -62,24 +62,24 @@ We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06c
 
    The list of message statuses and their meaning is [in the SDK documentation](https://sdk.optimism.io/enums/messagestatus).
    `6` means the message was relayed successfully.
-   
+
 1. Get the message receipt.
 
    ```js
    l2Rcpt = await crossChainMessenger.getMessageReceipt(l1TxHash)
    ```
 
-   In addition to `l2Rcpt.transactionReceipt`, which contains the standard transaction receipt, you get `l2Rcpt.receiptStatus` with the transaction status. 
+   In addition to `l2Rcpt.transactionReceipt`, which contains the standard transaction receipt, you get `l2Rcpt.receiptStatus` with the transaction status.
    [`1` means successful relay](https://sdk.optimism.io/enums/messagereceiptstatus).
 
-1. Get the hash of the L2 transaction (`l2Rcpt.transactionReceipt.transactionHash`) 
+1. Get the hash of the L2 transaction (`l2Rcpt.transactionReceipt.transactionHash`)
 
    ```js
    l2TxHash = l2Rcpt.transactionReceipt.transactionHash
    ```
 
-   You can view this transaction [on Etherscan](https://goerli-optimism.etherscan.io/tx/0xa31eda15162e681e78a52e35b63c3b3379e23705129c19d186790089519ac7d7).
-   
+   You can view this transaction [on Etherscan](https://rollux.tanenbaum.io/tx/0xa31eda15162e681e78a52e35b63c3b3379e23705129c19d186790089519ac7d7).
+
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Syscoin to Rollux, and *withdrawal* refers to any transaction going from Rollux to L1 Syscoin, whether or not there are assets attached.
    To see if actual assets were transferred, you can parse the event log.
@@ -119,7 +119,7 @@ We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06c
 
 ## Tracing a withdrawal
 
-We are going to trace [this withdrawal](https://goerli-optimism.etherscan.io/tx/0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053).
+We are going to trace [this withdrawal](https://rollux.tanenbaum.io/tx/0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053).
 
 
 1. Get the message status.
@@ -131,17 +131,17 @@ We are going to trace [this withdrawal](https://goerli-optimism.etherscan.io/tx/
 
    The list of message statuses and their meaning is [in the SDK documentation](https://sdk.optimism.io/enums/messagestatus).
    `6` means the message was relayed successfully.
-   
+
 1. Get the message receipt.
 
    ```js
    l1Rcpt = await crossChainMessenger.getMessageReceipt(l2TxHash)
    ```
 
-   In addition to `l1Rcpt.transactionReceipt`, which contains the standard transaction receipt, you get `l1Rcpt.receiptStatus` with the transaction status. 
+   In addition to `l1Rcpt.transactionReceipt`, which contains the standard transaction receipt, you get `l1Rcpt.receiptStatus` with the transaction status.
    [`1` means successful relay](https://sdk.optimism.io/enums/messagereceiptstatus).
 
-1. Get the hash of the L1 transaction (`l1Rcpt.transactionReceipt.transactionHash`) 
+1. Get the hash of the L1 transaction (`l1Rcpt.transactionReceipt.transactionHash`)
 
    ```js
    l1TxHash = l1Rcpt.transactionReceipt.transactionHash

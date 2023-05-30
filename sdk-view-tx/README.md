@@ -35,7 +35,7 @@ This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/
 
 ### Results
 
-Here are the expected results. 
+Here are the expected results.
 Note that by the time you read this there might be additional transactions reported.
 
 ```
@@ -79,7 +79,7 @@ const setup = async() => {
 
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: (await l1SignerOrProvider._networkPromise).chainId,
-      l2ChainId: (await l2SignerOrProvider._networkPromise).chainId,      
+      l2ChainId: (await l2SignerOrProvider._networkPromise).chainId,
       l1SignerOrProvider: l1SignerOrProvider,
       l2SignerOrProvider: l2SignerOrProvider
   })
@@ -121,7 +121,7 @@ If `l1Addr` is all zeroes, it means the transfer was ETH.
 
 ```js
   const l1Contract = new ethers.Contract(l1Addr, ERC20ABI, crossChainMessenger.l1SignerOrProvider)
-  return await l1Contract.symbol()  
+  return await l1Contract.symbol()
 ```
 
 Otherwise, ask the contract (we could have used the L1 or the L2) what is the correct symbol.
@@ -136,7 +136,7 @@ const describeTx = async tx => {
   console.log(`tx:${tx.transactionHash}`)
   // Assume all tokens have decimals = 18
   console.log(`\tAmount: ${tx.amount/1e18} ${await getSymbol(tx.l1Token)}`)
-  console.log(`\tRelayed: ${await crossChainMessenger.getMessageStatus(tx.transactionHash)  
+  console.log(`\tRelayed: ${await crossChainMessenger.getMessageStatus(tx.transactionHash)
                               == optimismSDK.MessageStatus.RELAYED}`)
 ```
 
@@ -147,7 +147,7 @@ In this case we only care whether the deposit/withdrawal is still in process or 
 }  // describeTx
 
 
-const main = async () => {    
+const main = async () => {
     await setup()
 
     // The address we trace

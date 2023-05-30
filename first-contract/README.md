@@ -7,7 +7,7 @@
 This tutorial assumes that you know how to program, but that you've never dealt with smart contracts, much less written one.
 If you are already familiar with Solidity [go here](../getting-started) for a tutorial that teaches you only how to use Rollux with the tools you already know.
 
-## Setup 
+## Setup
 
 ### Wallet
 
@@ -15,7 +15,7 @@ Before you can use Syscoin you need [wallet software](https://cointelegraph.com/
 In this tutorial we use [MetaMask](https://metamask.io/), a browser extension, as our wallet.
 You can also use MetaMask on a mobile device (iOS or Android), but for software development it is best to use a notebook or desktop computer.
 
-1. Make sure you have either Chrome, Firefox, Brave, or Edge. 
+1. Make sure you have either Chrome, Firefox, Brave, or Edge.
 
 1. Browse to [MetaMask](https://metamask.io/), scroll down and choose to install MetaMask for your browser.
 
@@ -25,7 +25,7 @@ You can also use MetaMask on a mobile device (iOS or Android), but for software 
 
 1. Type a password, accept the terms, and click **Create**.
 
-1. Click **Next**, reveal the secret words, and write them down somewhere safe. 
+1. Click **Next**, reveal the secret words, and write them down somewhere safe.
    We plan to only use this wallet for testing, so the key phrase should not matter that much, but it's best to develop good habits from the beginning.
 
 1. Let MetaMask help you confirm you have the correct written key phrase.
@@ -43,7 +43,7 @@ The test network also requires SYS, but it is test SYS (aka TSYS) you can get fo
 
 1. Use [this faucet](https://rollux.id/faucetapp) to obtain Rollux Tanenbaum test SYS.
 
-1. [Go here](https://chainlist.org/chain/57000) to add Rollux Tanenbaum to your wallet. 
+1. [Go here](https://chainlist.org/chain/57000) to add Rollux Tanenbaum to your wallet.
    Click **Add to Metamask** on the web page and then **Approve** in MetaMask.
 
 1. Permit the network switch.
@@ -65,7 +65,7 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
 1. Click the Files icon (<img src="assets/remix-files-icon.png" height="24" valign="top" />) and open **contracts > 1_Storage.sol**.
 
-1. Click the Compiler icon (<img src="assets/remix-compiler-icon.png" height="24" valign="top" />) 
+1. Click the Compiler icon (<img src="assets/remix-compiler-icon.png" height="24" valign="top" />)
 
 1. Click **Compile 1_Storage.sol**.
 
@@ -79,7 +79,7 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
 1. Expand the contract **STORAGE AT ...** and scroll down to see what you can do.
 
-1. To retrieve the current stored number, click **retrieve**. 
+1. To retrieve the current stored number, click **retrieve**.
    Note that as this is a read-only operation, it does not cost anything and does not require MetaMask confirmation.
 
 1. See the retrieved number right below the **retrieve** button.
@@ -100,7 +100,7 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
    1. Open the [Rollux Tanenbaum Blockscout explorer](https://rollux.tanenbaum.io/).
 
-   1. Search for the transaction hash. 
+   1. Search for the transaction hash.
       Note that it may take a few minutes for Blockscout to get updated.
 
 1. Back in Remix, click **retrieve** again to see that the value has changed.
@@ -124,8 +124,8 @@ pragma solidity >=0.7.0 <0.9.0;
 ```
 
 
-This line specifies the acceptable versions of the Solidity programming language. 
-In this case we only allow 0.7.x and 0.8.x versions. 
+This line specifies the acceptable versions of the Solidity programming language.
+In this case we only allow 0.7.x and 0.8.x versions.
 This is important because Solidity is new and still developing rapidly, and therefore [breaking changes](https://docs.soliditylang.org/en/v0.8.11/080-breaking-changes.html) are necessary from time to time.
 
 ```solidity
@@ -137,8 +137,8 @@ This is important because Solidity is new and still developing rapidly, and ther
 contract Storage {
 ```
 
-Define a contract called **Storage**. 
-A contract functions in many ways like [a class in Object Oriented Programming](https://en.wikipedia.org/wiki/Class_(computer_programming)). 
+Define a contract called **Storage**.
+A contract functions in many ways like [a class in Object Oriented Programming](https://en.wikipedia.org/wiki/Class_(computer_programming)).
 It contains variables and methods.
 
 ```solidity
@@ -146,12 +146,12 @@ It contains variables and methods.
     uint256 number;
 ```
 
-This is a field variable. The type, **uint**, is a 256 bit unsigned integer. 
+This is a field variable. The type, **uint**, is a 256 bit unsigned integer.
 This is the standard type for [evm](https://ethereum.org/en/developers/docs/evm/) variables.
 
-Note that all the fields in a contract are effectively public. 
+Note that all the fields in a contract are effectively public.
 Syscoin code is executed by multiple computers in multiple locations, and can be verified by anybody.
-This would be impossible if some part of the contract state had been unreadable. 
+This would be impossible if some part of the contract state had been unreadable.
 A field variable being `private` only means it cannot be ready by on-chain code.
 
 ```solidity
@@ -163,7 +163,7 @@ A field variable being `private` only means it cannot be ready by on-chain code.
     function store(uint256 num) public {
 ```
 
-This is a Solidity function definition (for a function without a return value). 
+This is a Solidity function definition (for a function without a return value).
 It includes:
 
 - Function name (`store`)
@@ -180,11 +180,11 @@ The rest of the function is standard for languages derived from C.
 
 ```solidity
     /**
-     * @dev Return value 
+     * @dev Return value
      * @return value of 'number'
      */
     function retrieve() public view returns (uint256){
-```        
+```
 
 This is another function definition, with a few differences:
 

@@ -8,7 +8,7 @@ For an L1/L2 token pair to work on the Standard Bridge, there has to be a layer 
 The most common configuration is to have L1 as the layer of original mint, and L2 as the bridged layer, this allows for ERC-20 contracts that were written with no knowledge of Optimism to be bridged.
 The contract on the bridged layer has to implement either the legacy [`IL2StandardERC20`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface (only if the bridged layer is L2) or the new [`IOptimismMintableERC20`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol) interface.
 
-For this to be done securely, the *only* entity that is allowed to mint and burn tokens on the bridged layer has to be the Standard Bridge, to ensure that the tokens on the bridged layer are backed up by real tokens on the layer of original mint. 
+For this to be done securely, the *only* entity that is allowed to mint and burn tokens on the bridged layer has to be the Standard Bridge, to ensure that the tokens on the bridged layer are backed up by real tokens on the layer of original mint.
 It is also necessary that the ERC-20 token contract on the layer of original mint *not* implement either of the interfaces, to make sure the bridge contracts don't get confused and think it is the bridged layer.
 
 **Note:** This tutorial is for the Bedrock OPv2 release, which is currently running on the Rollux Tanenbaum test network, but not on the production network.
@@ -56,13 +56,13 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
 1. Deploy the contract.
 
    ```sh
-   l2CustomERC20Factory = await ethers.getContractFactory("L2CustomERC20")   
+   l2CustomERC20Factory = await ethers.getContractFactory("L2CustomERC20")
    l2CustomERC20 = await l2CustomERC20Factory.deploy(
       "0x4200000000000000000000000000000000000010",
       process.env.L1_TOKEN_ADDRESS)
    ```
 
-## Transferring tokens 
+## Transferring tokens
 
 1. Get the token addresses.
 
@@ -137,9 +137,9 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 1. Check your balances on L1 and L2.
 
    ```js
-   await l1Contract.balanceOf(l1Wallet.address) 
+   await l1Contract.balanceOf(l1Wallet.address)
    await l2CustomERC20.balanceOf(l1Wallet.address)
-   ```   
+   ```
 
 1. Do the actual deposit
 
@@ -157,7 +157,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
 1. Check your balances on L1 and L2.
 
    ```js
-   await l1Contract.balanceOf(l1Wallet.address) 
+   await l1Contract.balanceOf(l1Wallet.address)
    await l2CustomERC20.balanceOf(l1Wallet.address)
    ```
 
@@ -184,7 +184,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    ```js
    await crossChainMessenger.waitForMessageStatus(withdrawalTx1.hash, optimismSDK.MessageStatus.READY_FOR_RELAY)
    withdrawalTx3 = await crossChainMessenger.finalizeMessage(withdrawalTx1.hash)
-   await withdrawalTx3.wait()   
+   await withdrawalTx3.wait()
    ```
 
 
@@ -192,6 +192,6 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    The balance on L2 should be back to zero.
 
    ```js
-   await l1Contract.balanceOf(l1Wallet.address) 
+   await l1Contract.balanceOf(l1Wallet.address)
    await l2CustomERC20.balanceOf(l1Wallet.address)
    ```

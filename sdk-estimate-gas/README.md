@@ -51,7 +51,7 @@ This calculation is complicated by the fact that the major cost is the cost of w
 
    - `--verify`: Run the transaction to verify the estimate
 
-   
+
 
 ### Results
 
@@ -136,7 +136,7 @@ const argv = yargs
 Use the [`yargs` package](http://yargs.js.org/) to read the command line parameters.
 
 ```js
-const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
+const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 ```
 
 Read the [JSON file](./Greeter.json) to know how to use the `Greeter` contract.
@@ -160,7 +160,7 @@ Addresses for the Greeter contracts:
 
 ```js
 // Utilities
-const displayWei = x => x.toString().padStart(20, " ")                        
+const displayWei = x => x.toString().padStart(20, " ")
 const displayGas = x => x.toString().padStart(10, " ")
 ```
 
@@ -171,7 +171,7 @@ To properly align these values for display, we first turn [them into strings](ht
 const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 ```
 
-Return a [Promise](https://www.w3schools.com/js/js_promise.asp) that gets resolved after `ms` milliseconds. 
+Return a [Promise](https://www.w3schools.com/js/js_promise.asp) that gets resolved after `ms` milliseconds.
 
 </details>
 
@@ -219,7 +219,7 @@ const getEstimates = async (provider, tx) => {
 
 [Estimate the total cost (L1+L2) of running the transaction](https://sdk.optimism.io/modules.html#estimateTotalGasCost).
 
-> :warning: This function calls `eth_estimateGas`, which runs the transaction in the node (without changing the blockchain state). 
+> :warning: This function calls `eth_estimateGas`, which runs the transaction in the node (without changing the blockchain state).
 > This means that the account in `l2Provider` has to have enough ETH to pay for the gas cost of the transaction.
 
 ```js
@@ -229,7 +229,7 @@ const getEstimates = async (provider, tx) => {
 
 Estimate the two components of the cost: [L1](https://sdk.optimism.io/modules.html#estimateL1GasCost) and [L2](https://sdk.optimism.io/modules.html#estimateL1GasCost).
 
-```js    
+```js
     l1Gas: await provider.estimateL1Gas(tx)
   }
 }    // getEstimates
@@ -255,7 +255,7 @@ Show the gas cost estimates.
 
 ```js
   if (argv.verify) {
-    console.log(`\nReal values:`)    
+    console.log(`\nReal values:`)
     console.log(`   Total gas cost: ${displayWei(real.totalCost)} wei`)
     console.log(`      L1 gas cost: ${displayWei(real.l1Cost)} wei`)
     console.log(`      L2 gas cost: ${displayWei(real.l2Cost)} wei`)
@@ -266,7 +266,7 @@ If we are verifying the estimates, show the real values.
 ```js
     console.log(`\nL1 Gas:`)
     console.log(`      Estimate: ${displayGas(estimated.l1Gas)}`)
-    console.log(`          Real: ${displayGas(real.l1Gas)}`)  
+    console.log(`          Real: ${displayGas(real.l1Gas)}`)
     console.log(`    Difference: ${displayGas(real.l1Gas-estimated.l1Gas)}`)
 ```
 
@@ -275,7 +275,7 @@ Compare the L1 gas estimated with the L1 gas actually required.
 ```js
     console.log(`\nL2 Gas:`)
     console.log(`      Estimate: ${displayGas(estimated.l2Gas)}`)
-    console.log(`          Real: ${displayGas(real.l2Gas)}`)  
+    console.log(`          Real: ${displayGas(real.l2Gas)}`)
     console.log(`    Difference: ${displayGas(real.l2Gas-estimated.l2Gas)}`)
 ```
 
@@ -298,13 +298,13 @@ If we aren't verifying the estimate, just display the estimated values.
 ### main
 
 ```js
-const main = async () => {    
-    
+const main = async () => {
+
     const signer = await getSigner()
 
     if(!greeterAddrs[argv.network]) {
       console.log(`I don't know the Greeter address on chain: ${argv.network}`)
-      process.exit(-1)  
+      process.exit(-1)
     }
 
     const Greeter = new ethers.ContractFactory(greeterJSON.abi, greeterJSON.bytecode, signer)
@@ -384,7 +384,7 @@ Create the transaction and then wait for it to be processed.
 This is [the standard way to submit a transaction in Ethers](https://docs.ethers.io/v5/api/contract/contract/#contract-functionsSend).
 
 ```js
-      } catch (err) {        
+      } catch (err) {
         console.log(`Error: ${err}`)
         console.log(`Coming from address: ${await signer.getAddress()} on Optimistic ${network}`)
         console.log(`            balance: ${displayWei(await signer.getBalance())} wei`)
@@ -409,12 +409,12 @@ It takes a bit of time before the change in the account's balance is processed.
 This loop lets us wait until it is processed so we'll be able to know the full cost.
 
 Note that this is not the only way to wait until a transaction happens.
-You can also use [`crossDomainMessenger.waitForMessageStatus`](https://sdk.optimism.io/interfaces/icrosschainmessenger#waitForMessageStatus). 
+You can also use [`crossDomainMessenger.waitForMessageStatus`](https://sdk.optimism.io/interfaces/icrosschainmessenger#waitForMessageStatus).
 
 ```js
       // Get the real information (cost, etc.) from the transaction response
       real.l1Gas = realTxResp.l1GasUsed
-      real.l1Cost = realTxResp.l1Fee 
+      real.l1Cost = realTxResp.l1Fee
 ```
 
 These fields are specific to Optimism transaction responses.
@@ -437,7 +437,7 @@ Another would be to multiply `gasUsed` by `gasPrice`.
 
 
 ```js
-    displayResults(estimated, real)    
+    displayResults(estimated, real)
 }  // main
 
 

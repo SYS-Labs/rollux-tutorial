@@ -17,7 +17,7 @@ const setup = async() => {
 
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: (await l1SignerOrProvider._networkPromise).chainId,
-      l2ChainId: (await l2SignerOrProvider._networkPromise).chainId,      
+      l2ChainId: (await l2SignerOrProvider._networkPromise).chainId,
       l1SignerOrProvider: l1SignerOrProvider,
       l2SignerOrProvider: l2SignerOrProvider
   })
@@ -48,7 +48,7 @@ const getSymbol = async l1Addr => {
   if (l1Addr == '0x0000000000000000000000000000000000000000')
     return "ETH"
   const l1Contract = new ethers.Contract(l1Addr, ERC20ABI, crossChainMessenger.l1SignerOrProvider)
-  return await l1Contract.symbol()  
+  return await l1Contract.symbol()
 }   // getSymbol
 
 // Describe a cross domain transaction, either deposit or withdrawal
@@ -56,12 +56,12 @@ const describeTx = async tx => {
   console.log(`tx:${tx.transactionHash}`)
   // Assume all tokens have decimals = 18
   console.log(`\tAmount: ${tx.amount/1e18} ${await getSymbol(tx.l1Token)}`)
-  console.log(`\tRelayed: ${await crossChainMessenger.getMessageStatus(tx.transactionHash)  
+  console.log(`\tRelayed: ${await crossChainMessenger.getMessageStatus(tx.transactionHash)
                               == optimismSDK.MessageStatus.RELAYED}`)
 }  // describeTx
 
 
-const main = async () => {    
+const main = async () => {
     await setup()
 
     // The address we trace
@@ -76,7 +76,7 @@ const main = async () => {
     console.log(`\n\n\nWithdrawals by address ${addr}`)
     for (var i=0; i<withdrawals.length; i++)
       await describeTx(withdrawals[i])
-      
+
 }  // main
 
 

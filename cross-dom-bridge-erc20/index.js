@@ -28,17 +28,17 @@ const erc20Addrs = {
 }    // erc20Addrs
 
 // To learn how to deploy an L2 equivalent to an L1 ERC-20 contract,
-// see here: 
+// see here:
 // https://github.com/ethereum-optimism/optimism-tutorial/tree/main/standard-bridge-standard-token
 
 
 // Global variable because we need them almost everywhere
 let crossChainMessenger
 let l1ERC20, l2ERC20    // OUTb contracts to show ERC-20 transfers
-let ourAddr             // The address of the signer we use.  
+let ourAddr             // The address of the signer we use.
 
 
-// Get signers on L1 and L2 (for the same address). Note that 
+// Get signers on L1 and L2 (for the same address). Note that
 // this address needs to have ETH on it, both on Optimism and
 // Optimism Georli
 const getSigners = async () => {
@@ -56,7 +56,7 @@ const getSigners = async () => {
 
 // The ABI fragment for the contract. We only need to know how to do two things:
 // 1. Get an account's balance
-// 2. Call the faucet to get more (only works on L1). Of course, production 
+// 2. Call the faucet to get more (only works on L1). Of course, production
 //    ERC-20 tokens tend to be a bit harder to acquire.
 const erc20ABI = [
   // balanceOf
@@ -74,7 +74,7 @@ const erc20ABI = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function"
-  }  
+  }
 ]    // erc20ABI
 
 
@@ -163,26 +163,26 @@ const withdrawERC20 = async () => {
 
   console.log("Waiting for status to be READY_TO_PROVE")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
+  await crossChainMessenger.waitForMessageStatus(response.hash,
     optimismSDK.MessageStatus.READY_TO_PROVE)
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.proveMessage(response.hash)
   
 
-  console.log("In the challenge period, waiting for status READY_FOR_RELAY") 
+  console.log("In the challenge period, waiting for status READY_FOR_RELAY")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
-  await crossChainMessenger.waitForMessageStatus(response.hash, 
-                                                optimismSDK.MessageStatus.READY_FOR_RELAY) 
+  await crossChainMessenger.waitForMessageStatus(response.hash,
+                                                optimismSDK.MessageStatus.READY_FOR_RELAY)
   console.log("Ready for relay, finalizing message now")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.finalizeMessage(response.hash)
 
   console.log("Waiting for status to change to RELAYED")
-  console.log(`Time so far ${(new Date()-start)/1000} seconds`)  
-  await crossChainMessenger.waitForMessageStatus(response, 
+  console.log(`Time so far ${(new Date()-start)/1000} seconds`)
+  await crossChainMessenger.waitForMessageStatus(response,
     optimismSDK.MessageStatus.RELAYED)
-  await reportERC20Balances()   
-  console.log(`withdrawERC20 took ${(new Date()-start)/1000} seconds\n\n\n`)  
+  await reportERC20Balances()
+  console.log(`withdrawERC20 took ${(new Date()-start)/1000} seconds\n\n\n`)
 }     // withdrawERC20()
 
 

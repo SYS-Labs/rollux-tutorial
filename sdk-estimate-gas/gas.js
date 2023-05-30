@@ -31,9 +31,9 @@ validLength = [12, 15, 18, 24]
 if (!validLength.includes(words)) {
     console.log(`The mnemonic (${process.env.MNEMONIC}) is the wrong number of words`)
     process.exit(-1)
-}  
+}
 
-const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json")) 
+const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 
 // These are the addresses of the Greeter.sol contract on the various Rollux networks:
 // rollux_mainnet - the production network
@@ -45,7 +45,7 @@ const greeterAddrs = {
 
 
 // Utilities
-const displayWei = x => x.toString().padStart(20, " ")                        
+const displayWei = x => x.toString().padStart(20, " ")
 const displayGas = x => x.toString().padStart(10, " ")
 const sleep = ms => new Promise(resp => setTimeout(resp, ms));
 
@@ -54,8 +54,8 @@ const getSigner = async () => {
   let endpointUrl;
 
   if (argv.network == 'rollux_tanenbaum')
-    endpointUrl = 
-      process.env.ANKR_API_KEY ? 
+    endpointUrl =
+      process.env.ANKR_API_KEY ?
         `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
         process.env.ROLLUX_TANENBAUM_URL
   if (argv.network == 'rollux_mainnet')
@@ -93,19 +93,19 @@ const displayResults = (estimated, real) => {
   console.log(`      L2 gas cost: ${displayWei(estimated.l2Cost)} wei`)
 
   if (argv.verify) {
-    console.log(`\nReal values:`)    
+    console.log(`\nReal values:`)
     console.log(`   Total gas cost: ${displayWei(real.totalCost)} wei`)
     console.log(`      L1 gas cost: ${displayWei(real.l1Cost)} wei`)
     console.log(`      L2 gas cost: ${displayWei(real.l2Cost)} wei`)
 
     console.log(`\nL1 Gas:`)
     console.log(`      Estimate: ${displayGas(estimated.l1Gas)}`)
-    console.log(`          Real: ${displayGas(real.l1Gas)}`)  
+    console.log(`          Real: ${displayGas(real.l1Gas)}`)
     console.log(`    Difference: ${displayGas(real.l1Gas-estimated.l1Gas)}`)
-    
+
     console.log(`\nL2 Gas:`)
     console.log(`      Estimate: ${displayGas(estimated.l2Gas)}`)
-    console.log(`          Real: ${displayGas(real.l2Gas)}`)  
+    console.log(`          Real: ${displayGas(real.l2Gas)}`)
     console.log(`    Difference: ${displayGas(real.l2Gas-estimated.l2Gas)}`)
   } else {   // if argv.verify
     console.log(`      L1 gas: ${displayGas(estimated.l1Gas)}`)
@@ -116,13 +116,13 @@ const displayResults = (estimated, real) => {
 
 
 
-const main = async () => {    
-    
+const main = async () => {
+
     const signer = await getSigner()
 
     if(!greeterAddrs[argv.network]) {
       console.log(`I don't know the Greeter address on chain: ${argv.network}`)
-      process.exit(-1)  
+      process.exit(-1)
     }
 
     const Greeter = new ethers.ContractFactory(greeterJSON.abi, greeterJSON.bytecode, signer)
@@ -168,12 +168,12 @@ const main = async () => {
       // Get the real information (cost, etc.) from the transaction response
       real.l1Gas = realTxResp.l1GasUsed
       real.l2Gas = realTxResp.gasUsed
-      real.l1Cost = realTxResp.l1Fee 
+      real.l1Cost = realTxResp.l1Fee
       real.l2Cost = real.totalCost - real.l1Cost
     }  // if argv.verify
 
     displayResults(estimated, real)
-        
+
 }  // main
 
 
