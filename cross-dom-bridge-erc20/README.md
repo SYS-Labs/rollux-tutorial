@@ -40,9 +40,9 @@ The SDK provides transparent safety rails to prevent that mistake.
 
 1. Copy `.env.example` to `.env` and edit it:
 
-   1. Set `MNEMONIC` to point to an account that has ETH on the Goerli test network and the Optimism Goerli test network.
-   1. Set `GOERLI_ALCHEMY_KEY` to the key for the Goerli app.
-   1. Set `OPTIMISM_GOERLI_ALCHEMY_KEY` to the key for the Optimistic Goerli app
+   1. Set `MNEMONIC` to point to an account that has TSYS on the Syscoin Tanenbaum test network and the Rollux Tanenbaum test network.
+   1. Set `L1_ANKR_API_KEY` to the authentication key for the RPC provider for Syscoin Tanenbaum.
+   1. Set `L2_ANKR_API_KEY` to the authentication key for the RPC provider for Rollux Tanenbaum.
 
    [This faucet gives SYS on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives SYS on the Rollux Tanenbaum network](https://sysdomains.xyz/rollux-faucet).
 
@@ -50,7 +50,7 @@ The SDK provides transparent safety rails to prevent that mistake.
 ## Run the sample code
 
 The sample code is in `index.js`, execute it.
-After you execute it, wait. It is not unusual for each operation to take minutes on Goerli.
+After you execute it, wait. It is not unusual for each operation to take minutes on Syscoin Tanenbaum.
 On the production network the withdrawals take around a week each, because of the [challenge period](https://community.optimism.io/docs/developers/bridge/messaging/#understanding-the-challenge-period).
 
 ### Expected output
@@ -114,8 +114,8 @@ The libraries we need: [`ethers`](https://docs.ethers.io/v5/), [`dotenv`](https:
 
 ```js
 const mnemonic = process.env.MNEMONIC
-const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_KEY}`
-const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_KEY}`
+const l1Url = `https://rpc.tanenbaum.io/`
+const l2Url = `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`
 ```
 
 Configuration, read from `.env`.
@@ -159,7 +159,7 @@ The first step is to create the two providers, each connected to an endpoint in 
 ```    
 
 To derive the private key and address from a mnemonic it is not enough to create the `HDNode` ([Hierarchical Deterministic Node](https://en.bitcoin.it/wiki/Deterministic_wallet#Type_2:_Hierarchical_deterministic_wallet)).
-The same mnemonic can be used for different blockchains (it's originally a Bitcoin standard), and the node with Ethereum information is under [`ethers.utils.defaultPath`](https://docs.ethers.io/v5/single-page/#/v5/api/utils/hdnode/-%23-hdnodes--defaultpath).
+The same mnemonic can be used for different blockchains (it's originally a Bitcoin standard), and the node with Syscoin information is under [`ethers.utils.defaultPath`](https://docs.ethers.io/v5/single-page/#/v5/api/utils/hdnode/-%23-hdnodes--defaultpath).
 
 ```js    
     const l1Wallet = new ethers.Wallet(privateKey, l1RpcProvider)

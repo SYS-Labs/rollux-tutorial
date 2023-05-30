@@ -59,8 +59,8 @@ const getSigner = async () => {
         `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
         process.env.ROLLUX_TANENBAUM_URL
   if (argv.network == 'rollux_mainnet')
-    endpointUrl = 
-      process.env.ALCHEMY_API_KEY ? 
+    endpointUrl =
+      process.env.ANKR_API_KEY ?
         `https://rpc.ankr.com/rollux_mainnet/${process.env.ANKR_API_KEY}` :
         process.env.ROLLUX_MAINNET_URL
 

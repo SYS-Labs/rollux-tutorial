@@ -29,8 +29,8 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 1. Edit `.env` to set the deployment parameters:
 
    - `MNEMONIC`, the mnemonic for an account that has enough ETH for the deployment.
-   - `L1_ALCHEMY_KEY`, the key for the alchemy application for a Syscoin Tanenbaum endpoint.
-   - `L2_ALCHEMY_KEY`, the key for the alchemy application for an Rollux Tanebaum endpoint.
+   - `L1_ANKR_API_KEY`, the authentication key for the RPC provider for Syscoin Tanenbaum.
+   - `L2_ANKR_API_KEY`, the authentication key for the RPC provider for Rollux Tanenbaum.
    - `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
      The default value, [`0x32B3b2281717dA83463414af4E8CfB1970E56287`](https://goerli.etherscan.io/address/0x32B3b2281717dA83463414af4E8CfB1970E56287) is a test ERC-20 contract on Goerli that lets you call `faucet` to give yourself test tokens.
 
@@ -93,7 +93,7 @@ If you do not need any special processing on L2, just the ability to deposit, tr
 1. Get the L1 wallet.
 
    ```js
-   l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.L1_ALCHEMY_KEY}`
+   l1Url = `https://rpc.tanenbaum.io/`
    l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)
    hdNode = ethers.utils.HDNode.fromMnemonic(process.env.MNEMONIC)
    privateKey = hdNode.derivePath(ethers.utils.defaultPath).privateKey

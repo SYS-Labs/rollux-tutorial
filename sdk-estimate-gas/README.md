@@ -4,8 +4,8 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
 
 
-This tutorial teaches you how to use the Rollux SDK to estimate the gas costs of L2 transactions. 
-This calculation is complicated by the fact that the major cost is the cost of writing the transaction on L1, it doesn't work to just multiply the gas used by the transaction by the gas price, the same way you would on L1. 
+This tutorial teaches you how to use the Rollux SDK to estimate the gas costs of L2 transactions.
+This calculation is complicated by the fact that the major cost is the cost of writing the transaction on L1, it doesn't work to just multiply the gas used by the transaction by the gas price, the same way you would on L1.
 [You can read the details of the calculation here](https://help.optimism.io/hc/en-us/articles/4411895794715-Transaction-fees).
 
 
@@ -182,15 +182,15 @@ const getSigner = async () => {
   let endpointUrl;
 
   if (argv.network == 'tanenbaum')
-    endpointUrl = 
-      process.env.ALCHEMY_API_KEY ? 
-        `https://opt-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
-        process.env.OPTIMISM_GOERLI_URL
+    endpointUrl =
+      process.env.ANKR_API_KEY ?
+        `https://rpc.ankr.com/rollux_testnet/${process.env.ANKR_API_KEY}` :
+        process.env.ROLLUX_TANENBAUM_URL
   if (argv.network == 'mainnet')
-    endpointUrl = 
-      process.env.ALCHEMY_API_KEY ? 
-        `https://opt-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}` :
-        process.env.OPTIMISM_MAINNET_URL
+    endpointUrl =
+      process.env.ANKR_API_KEY ?
+        `https://rpc.ankr.com/rollux/${process.env.ANKR_API_KEY}` :
+        process.env.ROLLUX_MAINNET_URL
 
     const l2RpcProvider = optimismSDK.asL2Provider(
       new ethers.providers.JsonRpcProvider(endpointUrl)

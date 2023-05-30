@@ -20,7 +20,7 @@ Another great option for a Rollux RPC endpoint is [Ankr](https://www.ankr.com/rp
 
 For development purposes we recommend you use either a local development node or [Rollux Tanenbaum](https://rollux.tanenbaum.io/).
 That way you don't need to spend real money.
-If you need SYS on Rollux Tanenbaum for testing purposes, [you can use this faucet](https://sysdomains.xyz/rollux-faucet).
+If you need SYS on Rollux Tanenbaum for testing purposes, [you can use this faucet](https://rollux.id/faucetapp).
 
 The tests examples below all use the Rollux Tanenbaum testnet.
 

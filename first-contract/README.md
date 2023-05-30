@@ -36,12 +36,12 @@ You can also use MetaMask on a mobile device (iOS or Android), but for software 
 
 In this tutorial we'll use [Rollux](https://www.rollux.com/), a Syscoin Layer 2 EVM-equivalent Rollup, to run our contracts.
 
-[Deploying contracts and interacting with them costs gas, which has to be purchased with Syscoin (also known as SYS)](https://ethereum.org/en/developers/docs/gas/). There are a variety of sources from which to [acquire SYS](https://syscoin.org/get-sys). 
+[Deploying contracts and interacting with them costs gas, which has to be purchased with Syscoin (also known as SYS)](https://coinsbench.com/about-evm-opcode-gas-ethereum-accounts-9f0896f09d04). There are a variety of sources from which to [acquire SYS](https://syscoin.org/get-sys).
 On the production network real SYS costs money, which is part of the security mechanism of Syscoin.
 To avoid spending real money, we'll use Rollux Tanenbaum, a test network built on top of Syscoin Tanenbaum.
 The test network also requires SYS, but it is test SYS (aka TSYS) you can get for free.
 
-1. Use [this faucet](https://sysdomains.xyz/rollux-faucet) to obtain Rollux Tanenbaum test SYS.
+1. Use [this faucet](https://rollux.id/faucetapp) to obtain Rollux Tanenbaum test SYS.
 
 1. [Go here](https://chainlist.org/chain/57000) to add Rollux Tanenbaum to your wallet. 
    Click **Add to Metamask** on the web page and then **Approve** in MetaMask.
@@ -86,7 +86,7 @@ It has the significant advantage of requiring minimal set up because it runs in 
 
    <img src="assets/remix-query.png" width="300" />
 
-1. To change the number, type a value next to **store** and then click it. Because this is a transaction that affects the blockchain state it costs ETH and requires you to **Confirm** on MetaMask.   
+1. To change the number, type a value next to **store** and then click it. Because this is a transaction that affects the blockchain state it costs SYS and requires you to **Confirm** on MetaMask.
 
    <img src="assets/remix-tx.png" width="300" />
 

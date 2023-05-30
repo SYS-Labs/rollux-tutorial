@@ -16,8 +16,8 @@ if (!validLength.includes(words)) {
    process.exit(-1)
 }
 
-const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`
-const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
+const l1Url = `https://rpc.tanenbaum.io/`
+const l2Url = `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`
 
 
 // Global variable because we need them almost everywhere
@@ -93,7 +93,7 @@ const withdrawETH = async () => {
 
   const response = await crossChainMessenger.withdrawETH(centieth)
   console.log(`Transaction hash (on L2): ${response.hash}`)
-  console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
+  console.log(`\tFor more information: https://rollux.tanenbaum.io/tx/${response.hash}`)
   await response.wait()
 
   console.log("Waiting for status to be READY_TO_PROVE")

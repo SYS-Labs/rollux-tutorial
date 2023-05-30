@@ -13,14 +13,14 @@ if (!validLength.includes(words)) {
 
 module.exports = {
   networks: {
-    'optimism-goerli': {
+    'rollux-testnet': {
       chainId: 420,
-      url: `https://opt-goerli.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`,
+      url: `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`,
       accounts: { mnemonic: process.env.MNEMONIC }
     },
-    'optimism-mainnet': {
+    'rollux-mainnet': {
       chainId: 10,
-      url: `https://opt-mainnet.g.alchemy.com/v2/${process.env.L2_ALCHEMY_KEY}`,
+      url: `https://rpc.ankr.com/rollux/${process.env.L2_ANKR_API_KEY}`,
       accounts: { mnemonic: process.env.MNEMONIC }
     }
   },

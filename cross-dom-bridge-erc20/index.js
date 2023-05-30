@@ -16,8 +16,8 @@ if (!validLength.includes(words)) {
    process.exit(-1)
 }
 
-const l1Url = `https://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_ALCHEMY_KEY}`
-const l2Url = `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_ALCHEMY_KEY}`
+const l1Url = `https://rpc.tanenbaum.io/`
+const l2Url = `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`
 
 
 // Contract addresses for OPTb tokens, taken
@@ -107,7 +107,7 @@ const reportERC20Balances = async () => {
   console.log(`You don't have enough OUTb on L1. Let's call the faucet to fix that`)
   const tx = (await l1ERC20.faucet())
   console.log(`Faucet tx: ${tx.hash}`)
-  console.log(`\tMore info: https://goerli.etherscan.io/tx/${tx.hash}`)
+  console.log(`\tMore info: https://tanenbaum.io/tx/${tx.hash}`)
   await tx.wait()
   const newBalance = (await l1ERC20.balanceOf(ourAddr)).toString().slice(0,-18)
   console.log(`New L1 OUTb balance: ${newBalance}`)
@@ -130,13 +130,13 @@ const depositERC20 = async () => {
     erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   await allowanceResponse.wait()
   console.log(`Allowance given by tx ${allowanceResponse.hash}`)
-  console.log(`\tMore info: https://goerli.etherscan.io/tx/${allowanceResponse.hash}`)
+  console.log(`\tMore info: https://tanenbaum.io/tx/${allowanceResponse.hash}`)
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
 
   const response = await crossChainMessenger.depositERC20(
     erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   console.log(`Deposit transaction hash (on L1): ${response.hash}`)
-  console.log(`\tMore info: https://goerli.etherscan.io/tx/${response.hash}`)
+  console.log(`\tMore info: https://tanenbaum.io/tx/${response.hash}`)
   await response.wait()
   console.log("Waiting for status to change to RELAYED")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
@@ -158,7 +158,7 @@ const withdrawERC20 = async () => {
   const response = await crossChainMessenger.withdrawERC20(
     erc20Addrs.l1Addr, erc20Addrs.l2Addr, oneToken)
   console.log(`Transaction hash (on L2): ${response.hash}`)
-  console.log(`\tFor more information: https://goerli-optimism.etherscan.io/tx/${response.hash}`)
+  console.log(`\tFor more information: https://rollux.tanenbaum.io/tx/${response.hash}`)
   await response.wait()
 
   console.log("Waiting for status to be READY_TO_PROVE")
