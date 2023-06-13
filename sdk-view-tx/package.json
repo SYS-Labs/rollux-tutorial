@@ -10,5 +10,5 @@
   },
   "scripts": {
     "script": "node view-tx.js"
-  }  
+  }
 }
