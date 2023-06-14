@@ -27,8 +27,9 @@ The tests examples below all use the Rollux Tanenbaum testnet.
 
 ## Interacting with Rollux contracts
 
-We have [Hardhat's Greeter contract](https://github.com/nomiclabs/hardhat/blob/master/packages/hardhat-core/sample-projects/basic/contracts/Greeter.sol) on Rollux Tanenbaum, at address [0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816](https://rollux.tanenbaum.io/address/0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816). 
-You can verify your development stack configuration by interacting with it. 
+We have [Hardhat's Greeter contract](https://github.com/SYS-Labs/rollux-tutorial/blob/main/getting-started/hardhat/contracts/Greeter.sol) on Rollux Tanenbaum, at address [0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816](https://rollux.tanenbaum.io/address/0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816).
+
+You can verify your development stack configuration by interacting with it.
 
 As you can see in the different development stacks below, the way you deploy contracts and interact with them on Rollux is almost identical to the way you do it with L1 Syscoin.
 The most visible difference is that you have to specify a different endpoint (of course).
@@ -348,7 +349,7 @@ Foundry does not give us a JavaScript console, everything can be done from the s
 
    ```sh
    export ETH_RPC_URL= << Your Rollux Tanenbaum URL goes here >>
-   export GREETER=0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816   
+   export GREETER=0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816
    ```
 
 1. Call `greet()`. Notice that the response is provided in hex.

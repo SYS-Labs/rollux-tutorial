@@ -8,8 +8,12 @@ While you *could* use [the bridge contracts](https://community.optimism.io/docs/
 The SDK provides transparent safety rails to prevent that mistake.
 
 
-**Note:** This tutorial is for the Bedrock OPv2 release, which is currently running on the Rollux Tanenbaum test network, but not on the production network.
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Rollux Tanenbaum test network.
 
+**Warning:** The standard bridge does *not* support certain ERC-20 configurations:
+
+- [Fee on transfer tokens](https://github.com/d-xo/weird-erc20#fee-on-transfer)
+- [Tokens that modify balances without emitting a Transfer event](https://github.com/d-xo/weird-erc20#balance-modifications-outside-of-transfers-rebasingairdrops)
 
 ## Setup
 
@@ -231,7 +235,6 @@ Get the signers we need, and our address.
 
 Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger) object that we use to transfer assets.
 At the current version of the SDK we need to specify that it is a bedrock transaction.
-After the production network is upgraded to bedrock, that will be the default.
 
 
 ```js
@@ -341,7 +344,7 @@ Of course, it takes time for the transaction to actually be processed on L1.
                                                   optimismSDK.MessageStatus.RELAYED)
 ```
 
-After the transaction is processed on L1 it needs to be picked up by an off-chain service and relayed to L2.
+After the transaction is processed on L1 it needs to be picked up by an offchain service and relayed to L2.
 To show that the deposit actually happened we need to wait until the message is relayed.
 The [`waitForMessageStatus`](https://sdk.optimism.io/classes/crosschainmessenger#waitForMessageStatus) function does this for us.
 [Here are the statuses we can specify](https://sdk.optimism.io/enums/messagestatus).

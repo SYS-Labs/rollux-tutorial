@@ -51,7 +51,7 @@ To see how to send these messages, see [the cross domain tutorial](../cross-dom-
 
 ## Tracing a deposit
 
-We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052). 
+We are going to trace [this deposit](https://goerli.etherscan.io/tx/0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052).
 
 1. Get the message status.
 
@@ -148,7 +148,7 @@ We are going to trace [this withdrawal](https://rollux.tanenbaum.io/tx/0x548f9ee
    ```
 
    You can view this transaction [on Etherscan](https://goerli.etherscan.io/tx/0xec821514b495c2c49dcba9b2c1a0955b85d02cd516748bc89c373d534ee878d4).
-   
+
 
 1. In Optimism terminology *deposit* refers to any transaction going from L1 Syscoin to Rollux, and *withdrawal* refers to any transaction going from Rollux to L1 Syscoin, whether or not there are assets attached.
    To see if actual assets were transferred, you can parse the event log.

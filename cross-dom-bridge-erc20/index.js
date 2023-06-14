@@ -167,7 +167,7 @@ const withdrawERC20 = async () => {
     optimismSDK.MessageStatus.READY_TO_PROVE)
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)
   await crossChainMessenger.proveMessage(response.hash)
-  
+
 
   console.log("In the challenge period, waiting for status READY_FOR_RELAY")
   console.log(`Time so far ${(new Date()-start)/1000} seconds`)

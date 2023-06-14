@@ -152,7 +152,7 @@ This is the standard type for [evm](https://ethereum.org/en/developers/docs/evm/
 Note that all the fields in a contract are effectively public.
 Syscoin code is executed by multiple computers in multiple locations, and can be verified by anybody.
 This would be impossible if some part of the contract state had been unreadable.
-A field variable being `private` only means it cannot be ready by on-chain code.
+A field variable being `private` only means it cannot be ready by onchain code.
 
 ```solidity
 
@@ -197,5 +197,5 @@ This is another function definition, with a few differences:
 }
 ```
 
-To learn more Solidity here is a convenient [list of resources](https://help.optimism.io/hc/en-us/articles/4412777835675-Developer-information#h_01FVSVQ5ZQFJDSRYY6WTY18F0N). 
+To learn more Solidity here is a convenient [list of resources](https://help.optimism.io/hc/en-us/articles/4412777835675-Developer-information#h_01FVSVQ5ZQFJDSRYY6WTY18F0N).
 If you learn best by reading source code, [try here](https://ethereum.org/en/developers/tutorials/erc20-annotated-code/).

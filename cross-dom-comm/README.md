@@ -12,7 +12,7 @@ This tutorial focuses on sending and receiving messages.
 If you want to trace transactions, [see the tracing tutorial](../sdk-trace-tx/).
 
 
-**Note:** This tutorial uses the Rollux Tanenbaum test network.
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Rollux Tanenbaum test network.
 
 ## Seeing it in action
 

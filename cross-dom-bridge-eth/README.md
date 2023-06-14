@@ -5,7 +5,7 @@
 
 This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer SYS between Layer 1 (Syscoin) and Layer 2 (Rollux).
 
-**Note:** This tutorial is for the Bedrock OPv2 release, which is currently running on the Rollux Tanenbaum test network, but not on the production network.
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Rollux Tanenbaum test network.
 
 ## Setup
 
@@ -237,7 +237,7 @@ Of course, it takes time for the transaction to actually be processed on L1.
                                                   optimismSDK.MessageStatus.RELAYED)
 ```
 
-After the transaction is processed on L1 it needs to be picked up by an off-chain service and relayed to L2.
+After the transaction is processed on L1 it needs to be picked up by an offchain service and relayed to L2.
 To show that the deposit actually happened we need to wait until the message is relayed.
 The [`waitForMessageStatus`](https://sdk.optimism.io/classes/crosschainmessenger#waitForMessageStatus) function does this for us.
 [Here are the statuses we can specify](https://sdk.optimism.io/enums/messagestatus).

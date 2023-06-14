@@ -10,7 +10,13 @@ For an L1/L2 token pair to work on the Standard Bridge the L2 token contract mus
 If you do not need any special processing on L2, just the ability to deposit, transfer, and withdraw tokens, you can use [`OptimismMintableERC20Factory`](https://github.com/SYS-Labs/rollux/blob/develop/packages/contracts-bedrock/contracts/universal/OptimismMintableERC20Factory.sol).
 
 
-**Note:** This tutorial is for the Bedrock OPv2 release, which is currently running on the Rollux Tanenbaum test network, but not on the production network.
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Rollux Tanenbaum test network.
+
+**Warning:** The standard bridge does *not* support certain ERC-20 configurations:
+
+- [Fee on transfer tokens](https://github.com/d-xo/weird-erc20#fee-on-transfer)
+- [Tokens that modify balances without emitting a Transfer event](https://github.com/d-xo/weird-erc20#balance-modifications-outside-of-transfers-rebasingairdrops)
+
 
 ## Deploying the token
 
