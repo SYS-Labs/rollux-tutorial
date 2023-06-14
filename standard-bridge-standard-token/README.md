@@ -5,9 +5,9 @@
 
 
 For an L1/L2 token pair to work on the Standard Bridge the L2 token contract must implement
-[`IL2StandardERC20`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface.
+[`IL2StandardERC20`](https://github.com/SYS-Labs/rollux/blob/2a00448db370a3cf8249637598f7224bbd50f75f/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface.
 
-If you do not need any special processing on L2, just the ability to deposit, transfer, and withdraw tokens, you can use [`OptimismMintableERC20Factory`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/OptimismMintableERC20Factory.sol).
+If you do not need any special processing on L2, just the ability to deposit, transfer, and withdraw tokens, you can use [`OptimismMintableERC20Factory`](https://github.com/SYS-Labs/rollux/blob/develop/packages/contracts-bedrock/contracts/universal/OptimismMintableERC20Factory.sol).
 
 
 **Note:** This tutorial is for the Bedrock OPv2 release, which is currently running on the Rollux Tanenbaum test network, but not on the production network.
@@ -32,7 +32,7 @@ If you do not need any special processing on L2, just the ability to deposit, tr
    - `L1_ANKR_API_KEY`, the authentication key for the RPC provider for Syscoin Tanenbaum.
    - `L2_ANKR_API_KEY`, the authentication key for the RPC provider for Rollux Tanenbaum.
    - `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
-     The default value, [`0x32B3b2281717dA83463414af4E8CfB1970E56287`](https://goerli.etherscan.io/address/0x32B3b2281717dA83463414af4E8CfB1970E56287) is a test ERC-20 contract on Goerli that lets you call `faucet` to give yourself test tokens.
+     The default value, [`0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d`](https://tanenbaum.io/address/0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d) is a test ERC-20 contract on Syscoin Tanenbaum that lets you call `faucet` to give yourself test tokens.
 
 1. Open the hardhat console.
 
@@ -40,15 +40,15 @@ If you do not need any special processing on L2, just the ability to deposit, tr
    yarn hardhat console --network rollux_tanenbaum
    ```
 
-1. Connect to `OptimismMintableERC20Factory`. 
+1. Connect to `OptimismMintableERC20Factory`.
 
    ```js
    fname = "node_modules/@eth-optimism/contracts-bedrock/artifacts/contracts/universal/OptimismMintableERC20Factory.sol/OptimismMintableERC20Factory.json"
    ftext = fs.readFileSync(fname).toString().replace(/\n/g, "")
    optimismMintableERC20FactoryData = JSON.parse(ftext)
    optimismMintableERC20Factory = new ethers.Contract(
-      "0x4200000000000000000000000000000000000012", 
-      optimismMintableERC20FactoryData.abi, 
+      "0x4200000000000000000000000000000000000012",
+      optimismMintableERC20FactoryData.abi,
       await ethers.getSigner())
    ```
 

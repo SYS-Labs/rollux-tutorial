@@ -6,7 +6,7 @@
 
 For an L1/L2 token pair to work on the Standard Bridge, there has to be a layer of original mint (where the minting and burning of tokens is controlled by the business logic), and a bridged layer where the Standard Bridge controls minting and burning.
 The most common configuration is to have L1 as the layer of original mint, and L2 as the bridged layer, this allows for ERC-20 contracts that were written with no knowledge of Optimism to be bridged.
-The contract on the bridged layer has to implement either the legacy [`IL2StandardERC20`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface (only if the bridged layer is L2) or the new [`IOptimismMintableERC20`](https://github.com/sidhujag/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol) interface.
+The contract on the bridged layer has to implement either the legacy [`IL2StandardERC20`](https://github.com/SYS-Labs/rollux/blob/2a00448db370a3cf8249637598f7224bbd50f75f/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface (only if the bridged layer is L2) or the new [`IOptimismMintableERC20`](https://github.com/SYS-Labs/rollux/blob/develop/packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol) interface.
 
 For this to be done securely, the *only* entity that is allowed to mint and burn tokens on the bridged layer has to be the Standard Bridge, to ensure that the tokens on the bridged layer are backed up by real tokens on the layer of original mint.
 It is also necessary that the ERC-20 token contract on the layer of original mint *not* implement either of the interfaces, to make sure the bridge contracts don't get confused and think it is the bridged layer.
@@ -45,7 +45,7 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
    - `L1_ANKR_API_KEY`, the authentication key for the RPC provider for Syscoin Tanenbaum.
    - `L2_ANKR_API_KEY`, the authentication key for the RPC provider for Rollux Tanenbaum.
    - `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
-     The default value, [`0x32B3b2281717dA83463414af4E8CfB1970E56287`](https://goerli.etherscan.io/address/0x32B3b2281717dA83463414af4E8CfB1970E56287) is a test ERC-20 contract on Goerli that lets you call `faucet` to give yourself test tokens.
+     The default value, [`0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d`](https://tanenbaum.io/address/0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d) is a test ERC-20 contract on Syscoin Tanenbaum that lets you call `faucet` to give yourself test tokens.
 
 1. Open the hardhat console.
 

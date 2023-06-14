@@ -23,7 +23,7 @@ const l2Url = `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY
 // Contract addresses for OPTb tokens, taken
 // from https://github.com/ethereum-optimism/ethereum-optimism.github.io/blob/master/data/OUTb/data.json
 const erc20Addrs = {
-  l1Addr: "0x32B3b2281717dA83463414af4E8CfB1970E56287",
+  l1Addr: "0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d",
   l2Addr: "0x3e7eF8f50246f725885102E8238CBba33F276747"
 }    // erc20Addrs
 
