@@ -46,8 +46,8 @@ This calculation is complicated by the fact that the major cost is the cost of w
    The command line options are:
 
    - `--network`: The network to estimate gas on:
-     - `mainnet`: The Optimism mainnet network
-     - `tanenbaum`: The Rollux Tanenbaum testnet
+     - `rollux_mainnet`: The Rollux mainnet
+     - `rollux_tanenbaum`: The Rollux Tanenbaum testnet
 
    - `--verify`: Run the transaction to verify the estimate
 
@@ -59,8 +59,8 @@ Here is an example of results from the main Optimism blockchain:
 
 
 ```
-ori@Oris-MBP sdk-estimate-gas % ./gas.js --network mainnet --verify
-ori@Oris-MacBook-Pro sdk-estimate-gas % ./gas.js --network mainnet --verify
+ori@Oris-MBP sdk-estimate-gas % ./gas.js --network rollux_mainnet --verify
+ori@Oris-MacBook-Pro sdk-estimate-gas % ./gas.js --network rollux_mainnet --verify
 About to get estimates
 About to create the transaction
 Transaction created and submitted
@@ -86,8 +86,8 @@ L2 Gas:
     Difference:        -14
 ```
 
-The L1 gas cost is over a thousand times the L2 gas cost.
-This is typical in Optimistic transactions, because of the cost ratio between L1 gas and L2 gas.
+The L1 gas cost significantly more than the L2 gas cost.
+This is typical in Rollux transactions, because of the cost ratio between L1 gas and L2 gas.
 
 
 
@@ -119,11 +119,11 @@ The packages needed for the script.
 
 const argv = yargs
   .option('network', {
-    // All of those choices are Optimism:
-    // mainnet - Optimism Mainnet, the production network
-    // tanenbaum - Rollux Tanenbaum, the main test network
-    choices: ["mainnet", "tanenbaum"],
-    description: 'Optimistm network to use'
+    // All of those choices are Rollux:
+    // rollux_mainnet - Rollux Mainnet, the production network
+    // rollux_tanenbaum - Rollux Tanenbaum, the primary test network
+    choices: ["rollux_mainnet", "rollux_tanenbaum"],
+    description: 'Rollux network to use'
   }).
   option('verify', {
     type: boolean,
@@ -142,19 +142,19 @@ const greeterJSON = JSON.parse(fs.readFileSync("Greeter.json"))
 Read the [JSON file](./Greeter.json) to know how to use the `Greeter` contract.
 
 ```js
-// These are the addresses of the Greeter.sol contract on the various Optimism networks:
+// These are the addresses of the Greeter.sol contract on the various Rollux networks:
 // mainnet - Optimism Mainnet, the production network
 // tanenbaum - Rollux Tanenbaum, the main test network
 const greeterAddrs = {
-  "mainnet":  "0xcf210488dad6da5fe54d260c45253afc3a9e708c",
-  "tanenbaum": "0x106941459a8768f5a92b770e280555faf817576f"
+  "mainnet":  "",
+  "tanenbaum": "0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816"
 }
 ```
 
 Addresses for the Greeter contracts:
 
-- [Mainnet](https://explorer.optimism.io/address/0xcf210488dad6da5fe54d260c45253afc3a9e708c#code)
-- [Goerli](https://rollux.tanenbaum.io/address/0x2316EEbB361d13b0BB091B7C3533079c0f2a229#code)
+- [Mainnet]()
+- [Tanenbaum](https://rollux.tanenbaum.io/address/0x32C00875ca5bc5e6E07A84a39F9fb177d4aeF816#code)
 
 
 
@@ -451,5 +451,5 @@ main().then(() => process.exit(0))
 
 ## Conclusion
 
-Using the Optimism SDK you can show users how much a transaction would cost before they submit it.
+Using the Optimism SDK with Rollux, you can show users how much a transaction would cost before they submit it.
 This is a useful feature in decentralized apps, because it lets people decide if the transaction is worth doing or not.

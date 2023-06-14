@@ -1,7 +1,7 @@
 # View transactions between layers
 
-[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
+[![Discord](https://img.shields.io/discord/1087373765014454322)](https://discord.gg/rollux)
+[![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
 
 
 This tutorial teaches you how to use [the Optimism SDK](https://sdk.optimism.io/) to view the transactions passed between L1 (Syscoin) and L2 (Rollux) by an address.
@@ -41,7 +41,7 @@ Note that by the time you read this there might be additional transactions repor
 ```
 Deposits by address 0xBCf86Fd70a0183433763ab0c14E7a760194f3a9F
 tx:0xa35a3085e025e2addd59c5ef2a2e5529be5141522c3cce78a1b137f2eb992d19
-	Amount: 0.01 ETH
+	Amount: 0.01 SYS
 	Relayed: true
 
 
@@ -51,7 +51,7 @@ tx:0x7826399958c6bb3831ef0b02b658e7e3e69f334e20e27a3c14d7caae545c3d0d
 	Amount: 1 DAI
 	Relayed: false
 tx:0xd9fd11fd12a58d9115afa2ad677745b1f7f5bbafab2142ae2cede61f80e90e8a
-	Amount: 0.001 ETH
+	Amount: 0.001 SYS
 	Relayed: true
 ```
 
@@ -114,10 +114,10 @@ const ERC20ABI = [
 
 const getSymbol = async l1Addr => {
   if (l1Addr == '0x0000000000000000000000000000000000000000')
-    return "ETH"
+    return "SYS"
 ```
 
-If `l1Addr` is all zeroes, it means the transfer was ETH.
+If `l1Addr` is all zeroes, it means the transfer was SYS.
 
 ```js
   const l1Contract = new ethers.Contract(l1Addr, ERC20ABI, crossChainMessenger.l1SignerOrProvider)
@@ -189,4 +189,4 @@ main().then(() => process.exit(0))
 
 You should now know how to identify all the deposits and/or withdrawals done by a specific address.
 There are some additional tracing functions in [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmessenger), but they are very similar in operation.
-Of course, if you have any problems you can ask on [our Discord](https://discord-gateway.optimism.io/).
+Of course, if you have any problems you can ask on [our Discord](https://discord.gg/rollux).

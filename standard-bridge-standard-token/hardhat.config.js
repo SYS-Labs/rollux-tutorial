@@ -15,13 +15,13 @@ if (!validLength.includes(words)) {
 module.exports = {
   networks: {
     'rollux-testnet': {
-      chainId: 420,
-      url: `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`,
+      chainId: 57000,
+      url: process.env.ROLLUX_TANENBAUM_URL,
       accounts: { mnemonic: process.env.MNEMONIC }
     },
     'rollux-mainnet': {
-      chainId: 10,
-      url: `https://rpc.ankr.com/rollux/${process.env.L2_ANKR_API_KEY}`,
+      chainId: 570,
+      url: process.env.ROLLUX_MAINNET_URL,
       accounts: { mnemonic: process.env.MNEMONIC }
     }
   },

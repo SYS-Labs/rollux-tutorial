@@ -1,6 +1,6 @@
 #! /usr/local/bin/node
 
-// Estimate the costs of an Optimistic Rollux (L2) transaction
+// Estimate the costs of an Rollux (L2) transaction
 
 const ethers = require("ethers")
 const optimismSDK = require("@eth-optimism/sdk")

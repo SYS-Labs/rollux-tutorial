@@ -1,14 +1,14 @@
-# Bridging ERC-20 tokens with the Optimism SDK
+# Bridging ERC-20 tokens with the Rollux SDK
 
-[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
+[![Discord](https://img.shields.io/discord/1087373765014454322)](https://discord.gg/rollux)
+[![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
 
 This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer ERC-20 tokens between Layer 1 (Syscoin) and Layer 2 (Rollux).
 While you *could* use [the bridge contracts](https://community.optimism.io/docs/developers/bridge/standard-bridge/) directly, a [simple usage error](https://community.optimism.io/docs/developers/bridge/standard-bridge/#depositing-erc20s) can cause you to lock tokens in the bridge forever and lose their value.
 The SDK provides transparent safety rails to prevent that mistake.
 
 
-**Note:** This tutorial is for the Bedrock release, which is currently running on the Rollux Tanenbaum test network.
+**Note:** This tutorial is for the Bedrock release, which is currently running on the Rollux Tanenbaum test and Rollux mainnet networks.
 
 **Warning:** The standard bridge does *not* support certain ERC-20 configurations:
 
@@ -26,7 +26,7 @@ The SDK provides transparent safety rails to prevent that mistake.
 
    ```sh
    git clone https://github.com/SYS-Labs/rollux-tutorial.git
-   cd optimism-tutorial/cross-dom-bridge-erc20
+   cd rollux-tutorial/cross-dom-bridge-erc20
    ```
 
 1. Install the necessary packages.
@@ -35,20 +35,21 @@ The SDK provides transparent safety rails to prevent that mistake.
    yarn
    ```
 
-1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
+1. If you are using testnet, simply copy `.env.example` to `.env` and skip the rest of this step.
 
-   - An application on Syscoin Tanenbaum
-   - An application on Rollux Tanenbaum
+   If you are using mainnet, go to [Ankr](https://ankr.com/) and get API keys for RPC service for the following:
 
-   Keep a copy of the two keys.
+   - Syscoin
+   - Rollux
 
-1. Copy `.env.example` to `.env` and edit it:
+   Keep a copy of the two keys. Then copy `.env.example` to `.env` and edit it:
 
    1. Set `MNEMONIC` to point to an account that has TSYS on the Syscoin Tanenbaum test network and the Rollux Tanenbaum test network.
-   1. Set `L1_ANKR_API_KEY` to the authentication key for the RPC provider for Syscoin Tanenbaum.
-   1. Set `L2_ANKR_API_KEY` to the authentication key for the RPC provider for Rollux Tanenbaum.
+   1. Set `L1_RPC` to the entire URL (including auth key) for the Ankr RPC provider for Syscoin mainnet.
+   1. Set `L2_RPC` to the entire URL (including auth key) for the Ankr RPC provider for Rollux mainnet.
 
-   [This faucet gives SYS on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives SYS on the Rollux Tanenbaum network](https://rollux.id/faucetapp).
+
+[This faucet gives TSYS (test SYS) on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives TSYS (test SYS) on the Rollux Tanenbaum network](https://rollux.id/faucetapp).
 
 
 ## Run the sample code
@@ -66,13 +67,13 @@ Deposit ERC20
 OUTb on L1:     OUTb on L2:
 You don't have enough OUTb on L1. Let's call the faucet to fix that
 Faucet tx: 0xb155e17116d592846770ed12aa926467315bcd1ac23ba48317d365d8ee3d0605
-	More info: https://goerli.etherscan.io/tx/0xb155e17116d592846770ed12aa926467315bcd1ac23ba48317d365d8ee3d0605
+	More info: https://tanenbaum.io/tx/0xb155e17116d592846770ed12aa926467315bcd1ac23ba48317d365d8ee3d0605
 New L1 OUTb balance: 1000
 Allowance given by tx 0x4a2543271590ede5575bbb502949b97caa8a75aac43aa2c445091bdf057e7669
-	More info: https://goerli.etherscan.io/tx/0x4a2543271590ede5575bbb502949b97caa8a75aac43aa2c445091bdf057e7669
+	More info: https://tanenbaum.io/tx/0x4a2543271590ede5575bbb502949b97caa8a75aac43aa2c445091bdf057e7669
 Time so far 15.968 seconds
 Deposit transaction hash (on L1): 0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052
-	More info: https://goerli.etherscan.io/tx/0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052
+	More info: https://tanenbaum.io/tx/0x80da95d06cfe8504b11295c8b3926709ccd6614b23863cdad721acd5f53c9052
 Waiting for status to change to RELAYED
 Time so far 35.819 seconds
 OUTb on L1:999     OUTb on L2:1
@@ -82,7 +83,7 @@ depositERC20 took 65.544 seconds
 Withdraw ERC20
 OUTb on L1:999     OUTb on L2:1
 Transaction hash (on L2): 0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053
-	For more information: https://goerli-optimism.etherscan.io/tx/0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053
+	For more information: https://rollux.tanenbaum.io/tx/0x548f9eed01498e1b015aaf2f4b8c538f59a2ad9f450aa389bb0bde9b39f31053
 Waiting for status to be READY_TO_PROVE
 Time so far 8.03 seconds
 Time so far 300.833 seconds
@@ -118,8 +119,8 @@ The libraries we need: [`ethers`](https://docs.ethers.io/v5/), [`dotenv`](https:
 
 ```js
 const mnemonic = process.env.MNEMONIC
-const l1Url = `https://rpc.tanenbaum.io/`
-const l2Url = `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`
+const l1Url = process.env.L1_RPC
+const l2Url = process.env.L2_RPC
 ```
 
 Configuration, read from `.env`.
