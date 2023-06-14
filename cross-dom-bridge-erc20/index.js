@@ -39,8 +39,8 @@ let ourAddr             // The address of the signer we use.
 
 
 // Get signers on L1 and L2 (for the same address). Note that
-// this address needs to have ETH on it, both on Optimism and
-// Optimism Georli
+// this address needs to have SYS on it, both on Rollux and
+// Syscoin.
 const getSigners = async () => {
     const l1RpcProvider = new ethers.providers.JsonRpcProvider(l1Url)
     const l2RpcProvider = new ethers.providers.JsonRpcProvider(l2Url)
@@ -84,7 +84,7 @@ const setup = async() => {
   ourAddr = l1Signer.address
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: 5700,   // Syscoin Tanenbaum value, 57 for mainnet
-      l2ChainId: 57000,  // Rollux Tanenbaum value, UNDISCLOSED for mainnet
+      l2ChainId: 57000,  // Rollux Tanenbaum value, 570 for mainnet
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer,
       bedrock: true

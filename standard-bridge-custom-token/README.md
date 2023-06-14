@@ -1,11 +1,10 @@
-# Bridging your Custom ERC20 token to Optimism using the Standard Bridge
+# Bridging your Custom ERC20 token to Rollux using the Standard Bridge
 
-[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
-
+[![Discord](https://img.shields.io/discord/1087373765014454322)](https://discord.gg/rollux)
+[![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
 
 For an L1/L2 token pair to work on the Standard Bridge, there has to be a layer of original mint (where the minting and burning of tokens is controlled by the business logic), and a bridged layer where the Standard Bridge controls minting and burning.
-The most common configuration is to have L1 as the layer of original mint, and L2 as the bridged layer, this allows for ERC-20 contracts that were written with no knowledge of Optimism to be bridged.
+The most common configuration is to have L1 as the layer of original mint, and L2 as the bridged layer, this allows for ERC-20 contracts that were written with no knowledge of Rollux to be bridged.
 
 The contract on the bridged layer has to implement either the legacy [`IL2StandardERC20`](https://github.com/SYS-Labs/rollux/blob/2a00448db370a3cf8249637598f7224bbd50f75f/packages/contracts/contracts/standards/IL2StandardERC20.sol) interface (only if the bridged layer is L2) or the new [`IOptimismMintableERC20`](https://github.com/SYS-Labs/rollux/blob/develop/packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol) interface.
 
@@ -45,13 +44,24 @@ Then the only thing we need to do is call the internal `_setupDecimals(8)` metho
    cp .env.example .env
    ```
 
-1. Edit `.env` to set the deployment parameters:
+1. If you are using testnet
+   1. Set `MNEMONIC` to point to an account that has TSYS on the Syscoin Tanenbaum test network and the Rollux Tanenbaum test network.
+   1. Set `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
+      The default value, [`0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d`](https://tanenbaum.io/address/0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d) is a test ERC-20 contract on Syscoin Tanenbaum that lets you call `faucet` to give yourself test tokens.
 
-   - `MNEMONIC`, the mnemonic for an account that has enough ETH for the deployment.
-   - `L1_ANKR_API_KEY`, the authentication key for the RPC provider for Syscoin Tanenbaum.
-   - `L2_ANKR_API_KEY`, the authentication key for the RPC provider for Rollux Tanenbaum.
-   - `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
-     The default value, [`0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d`](https://tanenbaum.io/address/0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d) is a test ERC-20 contract on Syscoin Tanenbaum that lets you call `faucet` to give yourself test tokens.
+   If you are using mainnet, go to [Ankr](https://ankr.com/) and get API keys for RPC service for the following:
+
+   - Syscoin
+   - Rollux
+
+   Keep a copy of the two keys. Then copy `.env.example` to `.env` and edit it:
+
+   1. Set `MNEMONIC` to point to an account that has TSYS on the Syscoin Tanenbaum test network and the Rollux Tanenbaum test network.
+   1. Set `SYSCOIN_MAINNET_URL` to the entire URL (including auth key) for the Ankr RPC provider for Syscoin mainnet.
+   1. Set `ROLLUX_MAINNET_URL` to the entire URL (including auth key) for the Ankr RPC provider for Rollux mainnet.
+   1. Set `L1_TOKEN_ADDRESS`, the address of the L1 ERC20 which you want to bridge.
+      The default value, [`0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d`](https://tanenbaum.io/address/0x77776E8e71FE900cF8f5e49E5d98558198CE2D1d) is a test ERC-20 contract on Syscoin Tanenbaum that lets you call `faucet` to give yourself test tokens.
+
 
 1. Open the hardhat console.
 
@@ -130,7 +140,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    })
    ```
 
-#### Deposit (from L1 to Optimism)
+#### Deposit (from L1 to Rollux)
 
 1. Give the L2 bridge an allowance to use the user's token.
    The L2 address is necessary to know which bridge is responsible and needs the allowance.
@@ -167,7 +177,7 @@ Create and use [`CrossDomainMessenger`](https://sdk.optimism.io/classes/crosscha
    await l2CustomERC20.balanceOf(l1Wallet.address)
    ```
 
-#### Withdrawal (from Optimism to L1)
+#### Withdrawal (from Rollux to L1)
 
 1. Initiate the withdrawal on L2
 

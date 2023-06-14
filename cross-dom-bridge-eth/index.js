@@ -16,7 +16,7 @@ if (!validLength.includes(words)) {
    process.exit(-1)
 }
 
-const l1Url = `https://rpc.tanenbaum.io/`
+const l1Url = `https://rpc.tanenbaum.io`
 const l2Url = `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`
 
 
@@ -41,7 +41,7 @@ const setup = async() => {
   addr = l1Signer.address
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: 5700,   // Syscoin Tanenbaum value, 57 for mainnet
-      l2ChainId: 57000,  // Rollux Tanenbaum value, UNDISCLOSED for mainnet
+      l2ChainId: 57000,  // Rollux Tanenbaum value, 570 for mainnet
       l1SignerOrProvider: l1Signer,
       l2SignerOrProvider: l2Signer,
       bedrock: true
@@ -51,8 +51,8 @@ const setup = async() => {
 
 
 const gwei = BigInt(1e9)
-const eth = gwei * gwei   // 10^18
-const centieth = eth/100n
+const sys = gwei * gwei   // 10^18
+const centisys = sys/100n
 
 
 const reportBalances = async () => {
@@ -63,9 +63,9 @@ const reportBalances = async () => {
 }    // reportBalances
 
 
-const depositETH = async () => {
+const depositSYS = async () => {
 
-  console.log("Deposit ETH")
+  console.log("Deposit SYS")
   await reportBalances()
   const start = new Date()
 
@@ -78,20 +78,20 @@ const depositETH = async () => {
                                                   optimismSDK.MessageStatus.RELAYED)
 
   await reportBalances()
-  console.log(`depositETH took ${(new Date()-start)/1000} seconds\n\n`)
-}     // depositETH()
+  console.log(`depositSYS took ${(new Date()-start)/1000} seconds\n\n`)
+}     // depositSYS()
 
 
 
 
 
-const withdrawETH = async () => {
+const withdrawSYS = async () => {
 
-  console.log("Withdraw ETH")
+  console.log("Withdraw SYS")
   const start = new Date()
   await reportBalances()
 
-  const response = await crossChainMessenger.withdrawETH(centieth)
+  const response = await crossChainMessenger.withdrawETH(centisys)
   console.log(`Transaction hash (on L2): ${response.hash}`)
   console.log(`\tFor more information: https://rollux.tanenbaum.io/tx/${response.hash}`)
   await response.wait()
@@ -118,14 +118,14 @@ const withdrawETH = async () => {
     optimismSDK.MessageStatus.RELAYED)
 
   await reportBalances()
-  console.log(`withdrawETH took ${(new Date()-start)/1000} seconds\n\n\n`)
-}     // withdrawETH()
+  console.log(`withdrawSYS took ${(new Date()-start)/1000} seconds\n\n\n`)
+}     // withdrawSYS()
 
 
 const main = async () => {
     await setup()
-    await depositETH()
-    await withdrawETH()
+    await depositSYS()
+    await withdrawSYS()
     // await depositERC20()
     // await withdrawERC20()
 }  // main

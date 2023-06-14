@@ -82,7 +82,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
    ```js
    Controller = await ethers.getContractFactory("FromL1_ControlL2Greeter")
-   controller = await Controller.attach("0xE3e834bf6c532dB1Fd7A695f6BDaB2cfEE393FD2")
+   controller = await Controller.attach("0xAE5F19b849d777B8D6Cb1296C5f10CCa19B0AeaD")
    tx = await controller.setGreeting(`Hardhat hello from L1 ${Date()}`)
    rcpt = await tx.wait()
    ```
@@ -130,7 +130,7 @@ This setup assumes you already have [Node.js](https://nodejs.org/en/) and [yarn]
 
    ```js
    Controller = await ethers.getContractFactory("FromL2_ControlL1Greeter")
-   controller = await Controller.attach("0x69474f2d2878f6BBF494f320f80217D9F6C7A53f")
+   controller = await Controller.attach("0x2316EEbB361d13b0BB091B7C3533079c0f2a229A")
    tx = await controller.setGreeting(`Hardhat hello from L2 ${Date()}`)
    rcpt = await tx.wait()
    ```
@@ -203,7 +203,7 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
-   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0x253807F6ECaC4DdD6E24b0a2F8d4042b0AC30dfd).
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract on L1](https://tanenbaum.io/address/0x63D297aa3feCbf6eEdE0aCd15B0308B9C8379afb).
    This usually happens every four minutes.
 
    ```js
@@ -228,7 +228,7 @@ The fault challenge window starts after you do this, so it's best to do it as ea
 
 ##### Receive the message
 
-Transactions from Rollux to Syscoin are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.optimism.io/docs/how-optimism-works/#fault-proofs).
+Transactions from Rollux to Syscoin are not accepted immediately, because we need to wait [to make sure there are no successful challenges](https://community.rollux.com/docs/how-rollux-works/#fault-proofs).
 Once the fault challenge period is over (ten seconds on Rollux Tanenbaum, seven days on the production network) it is necessary to claim the transaction on L1.
 This is a complex process that requires a [Merkle proof](https://medium.com/crypto-0-nite/merkle-proofs-explained-6dd429623dc5).
 You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimism/sdk).
@@ -431,7 +431,7 @@ You can do it using [the Optimism SDK](https://www.npmjs.com/package/@eth-optimi
 
 1. Check the status of the transaction.
    If it is `false`, wait a few seconds and try again.
-   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract](https://rollux.tanenbaum.io/address/0x253807F6ECaC4DdD6E24b0a2F8d4042b0AC30dfd).
+   When the state root is updated, you'll see a new transaction [on the L2OutputOracle contract on L1](https://tanenbaum.io/address/0x63D297aa3feCbf6eEdE0aCd15B0308B9C8379afb).
    This usually happens every four minutes.
 
    ```js
@@ -563,8 +563,6 @@ This call actually sends the message. It gets three parameters:
 1. The address on L2 of the contract being contacted
 1. The calldata to send that contract
 1. The gas limit.
-   As long as the gas limit is below the [`enqueueL2GasPrepaid`](https://explorer.syscoin.org/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2#readContract) value, there is no extra cost.
-   Note that this parameter is also required on messages from L2 to L1, but there it does not affect anything.
 
 ```solidity
     }      // function setGreeting
@@ -587,13 +585,10 @@ It might look like it would be more efficient to calculate the address of the cr
 Unless we are going to run this code thousands of times, it is more efficient to just have a few `if` statements.
 
 ```solidity
-    // Syscoin Mainnet
-    if (block.chainid == 57)
-      cdmAddr = 0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1;
 
     // Syscoin Tanenbaum
     if (block.chainid == 5700)
-      cdmAddr = 0x5086d1eEF304eb5284A0f6720f79403b4e9bE294;
+      cdmAddr = 0x51ac8093D762BBD17C8d898634916dAc14e1BCC1;
 
     // L2 (same address on every network)
     if (block.chainid == 57000)

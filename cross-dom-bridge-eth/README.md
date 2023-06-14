@@ -1,7 +1,7 @@
-# Bridging ETH with the Optimism SDK
+# Bridging SYS with the Rollux SDK
 
-[![Discord](https://img.shields.io/discord/667044843901681675.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discord-gateway.optimism.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/optimismFND.svg?label=optimismFND&style=social)](https://twitter.com/optimismFND)
+[![Discord](https://img.shields.io/discord/1087373765014454322)](https://discord.gg/rollux)
+[![Twitter Follow](https://img.shields.io/twitter/follow/RolluxL2?style=social)](https://twitter.com/RolluxL2)
 
 This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/) to transfer SYS between Layer 1 (Syscoin) and Layer 2 (Rollux).
 
@@ -18,7 +18,7 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
 
    ```sh
    git clone https://github.com/SYS-Labs/rollux-tutorial.git
-   cd optimism-tutorial/cross-dom-bridge-eth
+   cd rollux-tutorial/cross-dom-bridge-sys
    ```
 
 1. Install the necessary packages.
@@ -27,20 +27,21 @@ This tutorial teaches you how to use the [Optimism SDK](https://sdk.optimism.io/
    yarn
    ```
 
-1. Go to [Alchemy](https://www.alchemy.com/) and create two applications:
+1. If you are using testnet, simply copy `.env.example` to `.env` and skip the rest of this step.
 
-   - An application on Syscoin Tanenbaum
-   - An application on Rollux Tanenbaum
+   If you are using mainnet, go to [Ankr](https://ankr.com/) and get API keys for RPC service for the following:
 
-   Keep a copy of the two keys.
+   - Syscoin
+   - Rollux
 
-1. Copy `.env.example` to `.env` and edit it:
+   Keep a copy of the two keys. Then copy `.env.example` to `.env` and edit it:
 
    1. Set `MNEMONIC` to point to an account that has TSYS on the Syscoin Tanenbaum test network and the Rollux Tanenbaum test network.
-   1. Set `L1_ANKR_API_KEY` to the authentication key for the RPC provider for Syscoin Tanenbaum.
-   1. Set `L2_ANKR_API_KEY` to the authentication key for the RPC provider for Rollux Tanenbaum.
+   1. Set `L1_RPC` to the entire URL (including auth key) for the Ankr RPC provider for Syscoin mainnet.
+   1. Set `L2_RPC` to the entire URL (including auth key) for the Ankr RPC provider for Rollux mainnet.
 
-   [This faucet gives SYS on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives SYS on the Rollux Tanenbaum network](https://rollux.id/faucetapp).
+
+[This faucet gives TSYS (test SYS) on the Syscoin Tanenbaum network](https://faucet.syscoin.org/). [This faucet gives TSYS (test SYS) on the Rollux Tanenbaum network](https://rollux.id/faucetapp).
 
 
 ## Run the sample code
@@ -54,19 +55,19 @@ On the production network the withdrawals take around a week each, because of th
 When running on Syscoin Tanenbaum,the output from the script should be similar to:
 
 ```
-Deposit ETH
+Deposit SYS
 On L1:410251220 Gwei    On L2:29020983 Gwei
 Transaction hash (on L1): 0x4c057d3aaec665c1123d2dec1d8d82c64e567681f7c48fc1aadd007961bf5f02
 Waiting for status to change to RELAYED
 Time so far 14.79 seconds
 On L1:410078008 Gwei    On L2:29021983 Gwei
-depositETH took 43.088 seconds
+depositSYS took 43.088 seconds
 
 
-Withdraw ETH
+Withdraw SYS
 On L1:410078008 Gwei    On L2:29021983 Gwei
 Transaction hash (on L2): 0x18ec96d32811a684dab28350d7935f1fdd86533840a53f272aa7870724ae2a9c
-	For more information: https://goerli-optimism.etherscan.io/tx/0x18ec96d32811a684dab28350d7935f1fdd86533840a53f272aa7870724ae2a9c
+	For more information: https://rollux.tanenbaum.io/tx/0x18ec96d32811a684dab28350d7935f1fdd86533840a53f272aa7870724ae2a9c
 Waiting for status to be READY_TO_PROVE
 Time so far 7.197 seconds
 Time so far 290.453 seconds
@@ -77,7 +78,7 @@ Time so far 331.383 seconds
 Waiting for status to change to RELAYED
 Time so far 333.753 seconds
 On L1:419369936 Gwei    On L2:18842420 Gwei
-withdrawETH took 342.143 seconds
+withdrawSYS took 342.143 seconds
 
 ```
 
@@ -102,8 +103,8 @@ The libraries we need: [`ethers`](https://docs.ethers.io/v5/), [`dotenv`](https:
 
 ```js
 const mnemonic = process.env.MNEMONIC
-const l1Url = `https://rpc.tanenbaum.io/`
-const l2Url = `https://rpc.ankr.com/rollux_testnet/${process.env.L2_ANKR_API_KEY}`
+const l1Url = process.env.L1_RPC
+const l2Url = process.env.L2_RPC
 ```
 
 Configuration, read from `.env`.
@@ -178,18 +179,18 @@ Create the [`CrossChainMessenger`](https://sdk.optimism.io/classes/crosschainmes
 
 ### Variables that make it easier to convert between WEI and ETH
 
-Both ETH and DAI are denominated in units that are 10^18 of their basic unit.
+Both SYS and DAI are denominated in units that are 10^18 of their basic unit.
 These variables simplify the conversion.
 
 ```js
 const gwei = 1000000000n
-const eth = gwei * gwei   // 10^18
-const centieth = eth/100n
+const sys = gwei * gwei   // 10^18
+const centisys = sys/100n
 ```
 
 ### `reportBalances`
 
-This function reports the ETH balances of the address on both layers.
+This function reports the SYS balances of the address on both layers.
 
 ```js
 const reportBalances = async () => {
@@ -202,14 +203,14 @@ const reportBalances = async () => {
 
 
 
-### `depositETH`
+### `depositSYS`
 
 This function shows how to deposit SYS from Syscoin to Rollux.
 
 ```js
 const depositETH = async () => {
 
-  console.log("Deposit ETH")
+  console.log("Deposit SYS")
   await reportBalances()
 ```
 
@@ -248,31 +249,31 @@ The third parameter (which is optional) is a hashed array of options:
 
 ```js
   await reportBalances()
-  console.log(`depositETH took ${(new Date()-start)/1000} seconds\n\n`)
+  console.log(`depositSYS took ${(new Date()-start)/1000} seconds\n\n`)
 }     // depositETH()
 ```
 
 Once the message is relayed the balance change on Optimism is practically instantaneous.
 We can just report the balances and see that the L2 balance rose by 1 gwei.
 
-### `withdrawETH`
+### `withdrawSYS`
 
 This function shows how to withdraw SYS from Rollux to Syscoin.
 
 ```js
-const withdrawETH = async () => {
+const withdrawSYS = async () => {
 
-  console.log("Withdraw ETH")
+  console.log("Withdraw SYS")
   const start = new Date()
   await reportBalances()
 
-  const response = await crossChainMessenger.withdrawETH(centieth)
+  const response = await crossChainMessenger.withdrawETH(centisys)
 ```
 
 For deposits it was enough to transfer 1 gwei to show that the L2 balance increases.
 However, in the case of withdrawals the withdrawing account needs to pay on L1 for finalizing the message, which costs more than that.
 
-By sending 0.01 ETH it is guaranteed that the withdrawal will actually increase the L1 ETH balance instead of decreasing it.
+By sending 0.01 SYS it is guaranteed that the withdrawal will actually increase the L1 ETH balance instead of decreasing it.
 
 ```js
   console.log(`Transaction hash (on L2): ${response.hash}`)
@@ -325,7 +326,7 @@ Finalize the withdrawal and actually get back the 0.01 ETH.
   await crossChainMessenger.waitForMessageStatus(response,
     optimismSDK.MessageStatus.RELAYED)
   await reportBalances()
-  console.log(`withdrawETH took ${(new Date()-start)/1000} seconds\n\n\n`)
+  console.log(`withdrawSYS took ${(new Date()-start)/1000} seconds\n\n\n`)
 }     // withdrawETH()
 ```
 
@@ -337,8 +338,8 @@ A `main` to run the setup followed by both operations.
 ```js
 const main = async () => {
     await setup()
-    await depositETH()
-    await withdrawETH()
+    await depositSYS()
+    await withdrawSYS()
 }  // main
 
 
@@ -354,10 +355,10 @@ main().then(() => process.exit(0))
 
 You should now be able to write applications that use our SDK and bridge to transfer SYS between layer 1 and layer 2.
 
-Note that for withdrawals of ETH (or commonly used ERC-20 tokens) you would probably want to use a [third party bridge](https://www.optimism.io/apps/bridges) for higher speed and lower cost.
+<!---Note that for withdrawals of SYS (or commonly used ERC-20 tokens) you would probably want to use a [third party bridge](https://www.optimism.io/apps/bridges) for higher speed and lower cost.
 Here is the API documentation for some of those bridges:
 
 * [Hop](https://docs.hop.exchange/js-sdk/getting-started)
 * [Synapse](https://docs.synapseprotocol.com/bridge-sdk/sdk-reference/bridge-synapsebridge)
 * [Across](https://docs.across.to/bridge/developers/across-sdk)
-* [Celer Bridge](https://cbridge-docs.celer.network/developer/cbridge-sdk)
+* [Celer Bridge](https://cbridge-docs.celer.network/developer/cbridge-sdk)  --->

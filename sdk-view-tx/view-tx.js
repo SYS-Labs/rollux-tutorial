@@ -12,8 +12,8 @@ let crossChainMessenger
 
 const setup = async() => {
 
-  l1SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L1URL)
-  l2SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L2URL)
+  l1SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L1_RPC)
+  l2SignerOrProvider = new ethers.providers.JsonRpcProvider(process.env.L2_RPC)
 
   crossChainMessenger = new optimismSDK.CrossChainMessenger({
       l1ChainId: (await l1SignerOrProvider._networkPromise).chainId,
